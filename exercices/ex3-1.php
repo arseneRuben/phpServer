@@ -5,6 +5,14 @@ $description = 'Le plus vaste de choix de modèles réduits - Voitures - Camions
 $author = 'Votre nom ici';
 $icon = 'icon.jpg';
 $content = 'bla bla bla bla bla ceci est le contenu de la page';
+define('COMPANY_NAME', 'ScooterElectrique.com');
+define('COMPANY_STREET_ADDRESS', '5340 St-Laurent');
+define('COMPANY_CITY', 'Montréal');
+define('COMPANY_PROVINCE', 'QC');
+define('COMPANY_COUNTRY', 'Canada');
+define('COMPANY_POSTAL_CODE', 'J0P 1T0');
+define('COMPANY_EMAIL', 'fopoar@gmail.com');
+define('COMPANY_PHONE_NUMBER', '+145876598568');
 
 ?>
 <!DOCTYPE html>
@@ -43,6 +51,9 @@ $content = 'bla bla bla bla bla ceci est le contenu de la page';
     <!-- FOOTER -->
     <footer style="background-color:black;color:white;padding:10px">
         Exercice par <?= $author ?> &copy;
+        <p><?php echo COMPANY_STREET_ADDRESS . ' ' . COMPANY_PROVINCE . ' ' . COMPANY_COUNTRY . ' ' . COMPANY_POSTAL_CODE . '</p><p>' . COMPANY_PHONE_NUMBER . '  <a href="mailto:name@rapidtables.com">' . COMPANY_EMAIL . '</a>
+
+ </p>' ?></p>
     </footer>
     </div>
 </body>
