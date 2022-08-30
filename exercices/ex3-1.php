@@ -36,7 +36,7 @@ define('COMPANY_PHONE_NUMBER', '+145876598568');
     <!-- PAGE HEADER -->
     <header>
         <h2 style="background-color:black;color:white;padding:10px">
-            <?= $lang ?>
+            <?= $title ?>
         </h2>
     </header>
 
