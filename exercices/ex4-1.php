@@ -27,12 +27,3 @@ echo ' ',  mb_strlen($phrase) - substr_count($phrase, ' ');
 showTitle('Exercice 8: changer a pour b, c pour d, e pour f avec strtr()');
 $trans = array("a" => "b", "c" => "d", "e" => "f");
 echo ' ', strtr($phrase, $trans);
-$x = 33; // variable globale
-
-function f1()
-{
-
-    $x += 2;
-
-    echo $x;
-}

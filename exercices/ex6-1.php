@@ -5,6 +5,8 @@ const PRODUCT = 'Nos produits';
 const ABOUT = 'À propos';
 const IDEA = 'Idées cadeaux';
 
+
+
 // Le nom de l'item de menu qui doit être actif
 $selected = IDEA;
 
