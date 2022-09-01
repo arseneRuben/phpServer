@@ -88,6 +88,33 @@ function  tableAffiche($table)
     echo  "</tbody></table>";
 }
 
+function  tableToHtml($table)
+{
+    $html = "<table><thead>";
+    foreach (array_keys($table[0]) as $key) {
+        $html .= "<th>" . $key . "</th>";
+    }
+
+    $html .=  "</thead><tbody>";
+
+
+    foreach ($table as $produit) {
+        $html .= "<tr>";
+        foreach (array_keys($table[0]) as $key) {
+            $html .= "<td>" . $produit[$key] . "</td>";
+        }
+        $html .= "</tr>";
+    }
+
+    $html .=  "</tbody></table>";
+    return $html;
+}
 tableAffiche($produits);
+$users = [
+    ['id' => 0, 'email' => 'Yannick@gmail.com', 'pw' => '12345678'],
+    ['id' => 1, 'email' => 'Victor@test.com', 'pw' => '11111111'],
+    ['id' => 2, 'email' => 'Christian@victoire.ca', 'pw' => '22222222'],
+];
+echo tableToHtml($users);
 
 ?>
