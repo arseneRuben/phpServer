@@ -65,3 +65,29 @@
     ?>
 
 </table>
+
+<?php
+function  tableAffiche($table)
+{
+    echo "<table><thead>";
+    foreach (array_keys($table[0]) as $key) {
+        echo "<th>" . $key . "</th>";
+    }
+
+    echo  "</thead><tbody>";
+
+
+    foreach ($table as $produit) {
+        echo "<tr>";
+        foreach (array_keys($table[0]) as $key) {
+            echo "<td>" . $produit[$key] . "</td>";
+        }
+        echo "</tr>";
+    }
+
+    echo  "</tbody></table>";
+}
+
+tableAffiche($produits);
+
+?>
