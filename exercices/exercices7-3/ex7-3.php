@@ -58,21 +58,15 @@ $previsions = [
         <h1>Prévision météo</h1>
     </header>
     <main>
-
         <table>
-
-
             <?php
             $content = "";
             foreach ($previsions as $date => $data) {
-                $content .= '<tr>  <td>' .  $date . ' </td><td>  <img src="images/' . $data['image_file'] . '" alt="' . $data['image_desc'] . '">  </td><td>' . $data['temperature'] . '</td>  </tr>';
+                $content .= '<tr>  <td>' .  $date . ' </td><td>  <img src="' . IMG_PATH . '/' . $data['image_file'] . '" alt="' . $data['image_desc'] . '">  </td><td>' . $data['temperature'] . '</td>  </tr>';
             }
             echo $content;
             ?>
         </table>
-        <?php
-
-        ?>
     </main>
 </body>
 
