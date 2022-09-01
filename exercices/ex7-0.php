@@ -90,23 +90,27 @@ function  tableAffiche($table)
 
 function  tableToHtml($table)
 {
-    $html = "<table><thead>";
-    foreach (array_keys($table[0]) as $key) {
-        $html .= "<th>" . $key . "</th>";
-    }
-
-    $html .=  "</thead><tbody>";
-
-
-    foreach ($table as $produit) {
-        $html .= "<tr>";
+    if ($table === []) {
+        $html = "tableau vide";
+    } else {
+        $html = "<table><thead>";
         foreach (array_keys($table[0]) as $key) {
-            $html .= "<td>" . $produit[$key] . "</td>";
+            $html .= "<th>" . $key . "</th>";
         }
-        $html .= "</tr>";
-    }
 
-    $html .=  "</tbody></table>";
+        $html .=  "</thead><tbody>";
+
+
+        foreach ($table as $produit) {
+            $html .= "<tr>";
+            foreach (array_keys($table[0]) as $key) {
+                $html .= "<td>" . $produit[$key] . "</td>";
+            }
+            $html .= "</tr>";
+        }
+
+        $html .=  "</tbody></table>";
+    }
     return $html;
 }
 tableAffiche($produits);
