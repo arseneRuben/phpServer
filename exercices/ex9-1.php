@@ -57,7 +57,7 @@ $firstDate =  "2019-10-01";
 $secondDate = "1973-12-31";
 $firstDateToTime = strtotime("2019-10-01");
 $secondDateToTime = strtotime("1973-12-31");
-$difference =  ($firstDateToTime - $secondDateToTime) / (60 * 60 * 24);
+$difference =  ceil(($firstDateToTime - $secondDateToTime) / (60 * 60 * 24));
 echo "il y a $difference jours entre  $firstDate et $secondDate";
 showTitle('Exercice 8 Date en format Thursday, 10 January 2019');
 // votre code ici
