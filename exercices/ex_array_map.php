@@ -14,10 +14,14 @@ function keyToTh($key)
 // OUT <tr><th>id</th><th>nom</th><th>prenom</th>
 function keysToTr($keys)
 {
-    $result = '<tr><td>';
+    /* $result = '<tr><td>';
 
     $result .= implode('</td><td>', $keys);
-    $result .= '</td></tr>';
+    $result .= '</td></tr>';*/
+    $result = '<tr>';
+    $result .= array_map("dataToTd",  $keys);
+    $result .= '</tr>';
+
     return $result;
 }
 
