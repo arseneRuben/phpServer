@@ -13,6 +13,7 @@ define('COMPANY_COUNTRY', 'Canada');
 define('COMPANY_POSTAL_CODE', 'J0P 1T0');
 define('COMPANY_EMAIL', 'fopoar@gmail.com');
 define('COMPANY_PHONE_NUMBER', '+145876598568');
+define('VISITOR_LOG_FILE', 'visitors.log');
 
 
 
@@ -56,7 +57,8 @@ define('COMPANY_PHONE_NUMBER', '+145876598568');
         <p><?php echo COMPANY_STREET_ADDRESS . ' ' . COMPANY_PROVINCE . ' ' . COMPANY_COUNTRY . ' ' . COMPANY_POSTAL_CODE . '</p><p>' . COMPANY_PHONE_NUMBER . '  <a href="mailto:name@rapidtables.com">' . COMPANY_EMAIL . '</a>
 
  </p>' ?></p>
-        <p> <?php echo viewCount("log/ex10-2_vues.txt") . " Visiteur(s)" ?> </p>
+        <p> <?php echo viewCount("log/ex10-2_vues.txt") . " Visiteur(s)";
+            logVisitor(); ?> </p>
     </footer>
     </div>
 </body>
@@ -77,6 +79,16 @@ function viewCount($filename)
     file_put_contents($filename, $visit);
     return $visit;
 }
+
+
+
+
+
+function logVisitor()
+{
+    file_put_contents("log" . DIRECTORY_SEPARATOR . VISITOR_LOG_FILE, date(DATE_RFC2822) . "\n", FILE_APPEND);
+}
+
 
 
 ?>
