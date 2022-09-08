@@ -11,4 +11,3 @@ echo  "<b>  $var </b> et $Var  habitent" . COUNTRY;
 $leaders = ['id' => 1, 'nom' => $nom, 'mendat' => 9];
 var_dump($leaders);
 echo $leaders;
-phpinfo();

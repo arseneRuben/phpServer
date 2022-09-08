@@ -1,0 +1,25 @@
+<?php
+
+define('COMPANY_NAME', 'Buyam-Sellam SN');
+define('COMPANY_STREET_ADDRESS', '5340 St-Laurent');
+define('COMPANY_CITY', 'Montréal');
+define('COMPANY_PROVINCE', 'QC');
+define('COMPANY_COUNTRY', 'Canada');
+define('COMPANY_POSTAL_CODE', 'J0P 1T0');
+define('COMPANY_EMAIL', 'fopoar@gmail.com');
+define('COMPANY_PHONE_NUMBER', '+145876598568');
+define('LOG_FILE', 'homeviews.txt');
+define('VISITOR_LOG_FILE', 'visitors.log');
+
+
+
+const DEFAULT_PAGE_DATA = [
+    'lang' => 'fr-CA',
+    'title' => 'ClassicModels.com - Acceuil',
+    'description' => 'Le plus vaste de choix de modèles réduits - Voitures - Camions - Avions - Motos et plus',
+    'author' => 'Arsene',
+    'icon' => 'view/icon.jpg',
+    'manual' => 'manual.pdf',
+    'content' => 'ERREUR-CONTENU-NON-SPECIFIE',
+    'compteVues' => null
+];

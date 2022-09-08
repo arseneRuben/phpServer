@@ -4,8 +4,10 @@ function showTitle($title)
     echo "<h2>&#9830; $title</h2>";
     echo '<hr/>';
 }
+$e = 5;
 function str_word_count_utf8($str)
 {
+    echo $e;
     return count(preg_split('~[^\p{L}\p{N}\']+~u', $str));
 }
 

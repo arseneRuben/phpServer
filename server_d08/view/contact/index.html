@@ -1,0 +1,108 @@
+<main>
+
+    <form action="serveur.php" method="post">
+        <h3>
+            Reservez vos visites a Montreal
+        </h3>
+        <fieldset>
+            <legend>Identification</legend>
+            <div>
+                <input type="radio" name="gender" id="mme"><label for="mme">Mme</label>
+                <input type="radio" name="gender" id="mr"><label for="mr">Mr</label>
+            </div>
+            <div><label for="name">Nom complet</label><input type="text" name="name" id="name">
+            </div>
+            <div><label for="email">Email</label><input type="email" name="email" id="email">
+            </div>
+            <div><label for="city">Ville</label><input type="text" name="city" id="city">
+            </div>
+            <div><label for="postal">Code postal</label><input type="text" name="postal" id="postal">
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Reservations</legend>
+
+            <section>
+                <h3>Histoire</h3>
+                <div>
+                    <input type="checkbox" value="history1" name="site"><label>Canal de LaChine</label>
+                    <input type="checkbox" value="history2" name="site"><label>Superbe Square</label>
+                </div>
+            </section>
+            <section>
+                <h3> Sport</h3>
+                <div>
+                    <input type="checkbox" value="sport1" name="site"><label>Stade Olympique</label>
+                    <input type="checkbox" value="sport2" name="site"><label>Circuits gilles
+                        villeneuve</label>
+                </div>
+            </section>
+            <section>
+                <h3>Urbain</h3>
+                <div>
+                    <input type="checkbox" value="latin" name="site"><label>Quartier latin</label>
+                    <input type="checkbox" value="bourse" name="site"><label>Tour de la bourse</label>
+                </div>
+            </section>
+            <section>
+                <h3>Nature</h3>
+                <div>
+                    <input type="checkbox" value="montroyal" name="site"> <label>Parc du mont
+                        royal</label>
+                    <input type="checkbox" value="jardin" name="site"><label>Jardin botanique</label>
+                </div>
+            </section>
+            <section>
+                <h3>Culture</h3>
+                <div>
+                    <input type="checkbox" value="sat" name="site"><label>sat montreal</label>
+                    <input type="checkbox" value="mac" name="site"><label>musee mac</label>
+
+                </div>
+            </section>
+            <section>
+                <h3>Restaurant</h3>
+                <div>
+                    <input type="checkbox" value="toke" name="site"><label>Toke</label>
+                    <input type="checkbox" value="truite" name="site"><label>Ma grosse truie
+                        chérie</label>
+                </div>
+
+            </section>
+
+        </fieldset>
+        <fieldset>
+
+            <legend>Pr&eacute;f&eacute;rences</legend>
+            <div>
+                <div>
+                    <p>Langue de communication</p>
+                    <select name="lang" id="lang">
+                        <option value="francais">francais</option>
+                        <option value="anglais">anglais</option>
+                    </select>
+                </div>
+                <div>
+                    <p>Effectif</p>
+                    <select name="effectif" id="effectif">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6 et plus</option>
+                    </select>
+                </div>
+            </div>
+
+            <p>Autres</p>
+            <textarea name="other" id="other" cols="30" rows="10"
+                placeholder="Quelles sont vos attentes sp&eacute;ciales?"></textarea>
+        </fieldset>
+
+        <input type="submit" value="Soumettre">
+    </form>
+
+</main>

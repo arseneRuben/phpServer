@@ -1,0 +1,812 @@
+/**
+    Déclaration global a toute l'application
+    Cette partie est modifié SEULEMENT APRES avoir communiquer avec les autre membre de l'équipe.
+    --------------------------------------------------------------------------------------------
+**/
+
+/** Chargement des polices **/
+@font-face {
+    font-family: "UnicaOne";
+    src: url("../images/Fonts/Unica_One/UnicaOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Caveat";
+    src: url("../images/Fonts/Caveat/Caveat-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../images/Fonts/Poppins/Poppins-Regular.ttf");
+}
+
+/*Police de caractere par defaut pour tout le site, ne pas changer svp*/
+* {
+    font-family: "UnicaOne";
+}
+
+/** Déclaration du box-sizing, ne pas toucher svp **/
+* {
+    box-sizing: border-box;
+}
+
+/** Sémantique permettant un aspect constant sur toute l'application **/
+img {
+    max-width: 1300px;
+}
+
+img.star {
+    width: 20px;
+}
+
+img.avatar {
+    border-radius: 50%;
+    width: 10%;
+}
+
+/*--------------HEADER, ne rien modifier svp-----------------*/
+body {
+    background-color: #DAE2EF;
+    width: 96%;
+    max-width: 1400px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+}
+
+header>nav {
+    position: relative;
+    margin: 0 0 30px 0;
+}
+
+
+header>nav>img {
+    width: 20%;
+    margin: 0 3% 0 0;
+    vertical-align: bottom;
+}
+
+header>nav>span>a {
+    position: relative;
+    display: inline-block;
+    height: 90px;
+    border: 1px solid #DAE2EF;
+    border-radius: 10px;
+}
+
+header>nav>span>a:hover {
+    border: 1px solid #414957;
+}
+
+header>nav>span>a>img {
+    width: 40px;
+    height: 45px;
+    margin: 0 2%;
+}
+
+header>nav>span>a>span {
+    color: black;
+    text-decoration: none;
+    visibility: hidden;
+}
+
+header>nav>span>a:hover>span {
+    visibility: visible;
+}
+
+/*Barre de recherche*/
+header>nav>div {
+    display: inline-block;
+    width: 240px;
+    margin: 0 3% 0 2%;
+    vertical-align: 35px;
+}
+
+header>nav>div>input {
+    width: 200px;
+    height: 40px;
+}
+
+header>nav>div>img {
+    width: 30px;
+    vertical-align: middle;
+}
+
+/*Baniere video ou photo*/
+.home>header>div {
+    box-sizing: content-box;
+    display: inline-block;
+    max-width: 1300px;
+}
+
+header>div {
+    display: inline-block;
+    position: relative;
+}
+
+header>div>video {
+    width: 100%;
+    margin: auto;
+}
+
+header>div>img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+header>div>h1 {
+    position: absolute;
+    top: 35%;
+    left: 25%;
+    font-size: 80px;
+    background-color: rgba(194, 206, 211, 0.75);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    text-shadow: #02141b 2px 0 2px;
+}
+
+/*---------------------------FIN DU HEADER--------------------------*/
+
+/*---------------------------SECTION MAIN--------------------------*/
+
+main {
+
+    text-align: center;
+    display: inline-block;
+    width: 85%;
+    vertical-align: top;
+    margin: 20px auto 40px auto;
+    margin-left: 10%;
+}
+
+/*---------------------------END SECTION MAIN--------------------------*/
+
+/*---------------------------SECTION ASIDE--------------------------*/
+aside {
+    width: 60px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px auto;
+}
+
+aside img {
+    width: 40px;
+    display: block;
+    margin: 0 0 40px 0;
+}
+
+/*-----------------FOOTER, ne rien modifier svp ------------------*/
+footer {
+    width: 90%;
+    margin: auto;
+    border: 1px solid #8993A2;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #414957;
+}
+
+footer>div {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+    vertical-align: top;
+}
+
+footer img {
+    height: 80px;
+    margin: 0 0 15px 0;
+}
+
+/*Marge sous les titres "Suivez-nous" et "Nous Joindre"*/
+footer div:first-of-type>strong, div.contact>span:first-of-type>strong {
+    margin: 0 0 40px 0;
+}
+
+
+footer div:first-of-type a>img {
+    height: 40px;
+    margin: 0 0 15px 0;
+}
+
+footer div:first-of-type a:last-of-type>img {
+    margin: 0 0 5px 0;
+}
+
+footer>div>strong, footer>div>span:first-of-type>strong {
+    display: block;
+    font-size: 35px;
+    color: #C2CED3;
+    margin: 0 0 20px 0;
+}
+
+footer>div>a {
+    display: block;
+
+}
+
+footer .contact, .partenaires {
+    text-align: center;
+}
+
+.courriel>strong {
+    display: block;
+    font-family: "Poppins";
+    font-size: 15px;
+    margin: 0 0 30px 0;
+}
+
+.legal {
+    display: block;
+    font-size: 25px;
+    text-decoration: underline;
+}
+
+.partenaires {
+    padding: 0 20px;
+}
+
+.partenaires img {
+    display: inline-block;
+    width: 90px;
+    margin: 20px;
+}
+
+/*----------------------FIN DU FOOTER--------------------------*/
+
+body {
+    background-color: #DAE2EF;
+    width: 96%;
+    margin: auto;
+
+}
+
+/**
+    Déclaration spécifique a chaque page au besoin.
+    Chaque personne travaille sur une page à la fois donc il ne devrait jamais y avoir de conflit.
+
+    2 examples: home et contact
+    --------------------------------------------------------------------------------------------
+**/
+
+/** Example pour les cas spécifiques de la page home **/
+
+/*--------------PAGE ACCUEIL, ne rien changer svp----------------*/
+.home {
+    text-align: center;
+}
+
+
+.home header>div>h1 {
+    top: 30%;
+    left: 12%;
+}
+
+.home aside>a>img {
+    margin: 0 0 40px 0;
+
+}
+
+.home main {
+    width: 90%;
+    margin: 20px auto 40px auto;
+
+}
+
+.home main>article>img {
+    width: 350px;
+    height: 500px;
+    border-radius: 10px;
+}
+
+.home main>article>h2 {
+    position: absolute;
+    top: 35%;
+    left: 25%;
+    font-size: 50px;
+    background-color: rgba(194, 206, 211, 0.75);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    text-shadow: #02141b 2px 0 2px;
+}
+
+.home main>article {
+    display: inline-block;
+    width: 350px;
+    margin: 0 10px 40px 0;
+    vertical-align: top;
+    position: relative;
+
+}
+
+.home main>article>span {
+    display: block;
+}
+
+.home main>article>span>a>img {
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    height: 50px;
+    bottom: 5%;
+    right: 1%;
+    z-index: 30;
+    background-color: rgba(194, 206, 211, 0.75);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.home main>article.photo>img {
+    position: relative;
+}
+
+.home main>article.photo h2 {
+    position: absolute;
+
+    left: 14%;
+}
+
+/*--------------FIN PAGE ACCUEIL----------------*/
+
+/*--------------PAGE CATALOGUE, ne rien changer svp----------------*/
+.catalogue header h1 {
+    left: 40%;
+}
+
+
+.catalogue aside>a>img {
+    margin: 0 0 40px 0;
+}
+
+.catalogue main {
+    text-align: center;
+    display: inline-block;
+    width: 90%;
+    vertical-align: top;
+    margin: 20px auto 40px auto;
+}
+
+.catalogue main img {
+    width: 20%;
+    display: inline-block;
+}
+
+.catalogue article>div:first-of-type {
+    margin: 20px 30px 30px 30px;
+}
+
+.catalogue article>div {
+    display: block;
+    text-align: left;
+    margin: 30px;
+    border-radius: 10px;
+    background-color: #8993A2;
+}
+
+.catalogue article a {
+    text-decoration: none;
+    color: white;
+}
+
+.catalogue h3 {
+    color: white;
+    font-size: 35px;
+    background-color: rgba(194, 206, 211, 0.75);
+    border-radius: 0 10px 10px 0;
+    text-shadow: #02141b 1px 0 2px;
+}
+
+.catalogue article>div>div {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 60%;
+}
+
+.catalogue article>div>img {
+    display: inline-block;
+    margin: 20px 20px 20px 60px;
+    vertical-align: middle;
+    border-radius: 10px;
+}
+
+#pagination {
+    height: 50px;
+}
+
+.catalogue #pagination a img {
+    width: 30px;
+    height: 30px;
+    margin: 0 5%;
+}
+
+/*--------------FIN PAGE CATALOGUE----------------*/
+
+/*--------------PAGE TABLEAU, ne rien changer svp----------------*/
+body>.tableau {
+    text-align: center;
+}
+
+main.tableau {
+    width: 90%;
+    margin: auto;
+}
+
+.tableau table {
+    width: 90%;
+    margin: 30px auto 70px auto;
+    text-align: center;
+    font-family: "Poppins";
+}
+
+.tableau caption {
+    font-size: 45px;
+    font-weight: bold;
+    margin: 0 0 40px 0;
+}
+
+.tableau tr, th, td {
+    border: 4px solid #DAE2EF;
+    border-radius: 10px;
+}
+
+.tableau tr img.star {
+    width: 15px;
+}
+
+.tableau tbody>tr>img {
+    width: 20px;
+}
+
+.tableau td.col1 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.tableau td.col1 {
+    background-color: #8993A2;
+    border-radius: 10px;
+}
+
+.tableau td.col2>img {
+    width: 30px;
+}
+
+.tableau td.col6 {
+    background-color: #8993A2;
+    width: 1%;
+    border-radius: 70%;
+}
+
+.tableau td.col7>a>span {
+    visibility: hidden;
+}
+
+.tableau td.col7 {
+    width: 60px;
+    background-color: #C2CED3;
+}
+
+.tableau td.col7>a {
+    text-decoration: none;
+    padding: 10%;
+    color: black;
+}
+
+.tableau td.col7>a>img {
+    width: 40px;
+}
+
+.tableau td.col7>a:hover>span {
+    visibility: visible;
+}
+
+.tableau thead th>img {
+    width: 50px;
+    height: 40px;
+}
+
+.tableau th {
+    text-align: center;
+    height: 30px;
+}
+
+.tableau tbody>tr:nth-child(odd) {
+    background-color: rgba(190, 156, 98, 0.35);
+}
+
+.tableau tbody>tr:nth-child(even) {
+    background-color: rgba(137, 147, 162, 0.35);
+}
+
+/*--------------FIN PAGE TABLEAU----------------*/
+
+/** Example pour les cas spécifiques de la page contact **/
+
+/*--------------PAGE CONTACT, ne rien changer svp----------------*/
+
+
+.contact main {
+    display: inline-block;
+    vertical-align: top;
+    width: 75%;
+    margin-left: 8%;
+}
+
+.contact main form {
+    /** Spécifique pour l'intégration du formulaire de contact **/
+    border: 2px solid black;
+}
+
+.contact form fieldset:nth-of-type(1)>div {
+    margin-bottom: 10px;
+}
+
+.contact form fieldset:nth-of-type(1)>div:nth-of-type(1) {
+    margin-bottom: 20px;
+}
+
+.contact form fieldset:nth-of-type(1)>div label, .contact form fieldset:nth-of-type(1)>div input {
+    width: 30%;
+}
+
+.contact form fieldset div input {
+    background-color: white;
+
+}
+
+
+
+
+.contact form fieldset:nth-of-type(1)>div label {
+    float: left;
+    margin-left: 8%;
+}
+
+
+
+
+.contact form fieldset:nth-of-type(2)>section>h3 {
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 10%;
+
+}
+
+.contact form fieldset:nth-of-type(2)>section>div {
+    margin-left: 40%;
+    text-align: left;
+}
+
+.contact form fieldset:nth-of-type(3)>textarea {
+    width: 50%;
+    background-color: white;
+    /* This ruins default border */
+    border: 1px solid #888;
+}
+
+/*--------------FIN PAGE CONTACT----------------*/
+
+
+
+/*--------------PAGE DETAIL, ne rien changer svp----------------
+
+.detail .banner img {
+    width: 30%;
+
+}
+
+.detail .banner h1 {
+    text-align: right;
+    font-size: 40px;
+    right: 5%;
+    top: 5%;
+    width: 40%;
+    margin: 20px;
+    ;
+}*/
+
+
+.detail main header {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.detail .command>* {
+    display: inline-block;
+    width: 45%;
+}
+
+.detail main header>* {
+    display: inline-block;
+    margin: 2% 2%;
+}
+
+.detail main header img {
+
+    border-radius: 10px;
+    width: 30%;
+
+}
+
+.detail main header h2 {
+
+    display: inline-block;
+    vertical-align: top;
+}
+
+.detail main header+div img {
+
+    width: 20%;
+}
+
+.detail main div.content {
+    padding: 20px 10%;
+    background-color: whitesmoke;
+    color: #2b3e5f;
+    width: 80%;
+    margin: auto;
+
+}
+
+.detail main div.content div img {
+    margin: 10px 10px;
+    border-radius: 5px;
+}
+
+.detail main div.content div:nth-child(1) img {
+    float: left;
+
+}
+
+.detail main div.content div:nth-child(2) {
+    clear: both;
+}
+
+.detail main div.content div:nth-child(2) img {
+    float: right;
+}
+
+.detail main div.content div:nth-child(3) {
+    clear: both;
+}
+
+.detail .command {
+    text-align: right;
+    width: 80%;
+    margin-top: 5%;
+    padding-bottom: 5%;
+}
+
+.detail .comments article {
+    position: relative;
+    height: 200px;
+    text-align: center;
+}
+
+.detail .comments div.quote {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+}
+
+.detail .comments article img.avatar {
+    position: absolute;
+    top: 0;
+    left: 10%;
+}
+
+.detail .comments article:nth-child(2) {
+    clear: both;
+}
+
+.detail .comments article {
+    vertical-align: bottom;
+    margin-left: 20%;
+    margin-bottom: 100px;
+}
+
+.detail .comments article div.quote {
+
+    margin-left: 20%;
+
+
+}
+
+.detail button {
+    font-size: larger;
+    width: 30%;
+}
+
+/*
+.detail main div.content img:nth-child(1) {
+    float: left;
+}
+
+.detail main div.content img:nth-child(2) {
+    text-align: right;
+
+}*/
+
+
+
+
+
+.detail .details .info {
+    width: 35%;
+    display: inline-block;
+}
+
+.detail .mapouter {
+    position: relative;
+    text-align: center;
+
+    width: 60%;
+    display: inline-block;
+}
+
+.detail #gmap_canvas {
+    width: 60%;
+    height: 200px;
+    text-align: center;
+
+}
+
+/*--------------FIN PAGE DETAILS----------------*/
+
+
+
+/*--------------PAGE GALERIE, ne rien changer svp----------------*/
+.galerie main ul img {
+    width: 90%;
+    border-radius: 5px;
+    margin-top: 3%;
+}
+
+.galerie aside li {
+    height: 40px;
+}
+
+.galerie aside li a:visited, .galerie aside li a:link {
+    text-decoration: none;
+}
+
+.galerie main ul {
+    text-align: left;
+}
+
+.galerie li {
+    list-style-type: none;
+}
+
+.galerie main li div {
+    width: 45%;
+    display: inline-block;
+    position: relative;
+}
+
+.galerie main article li p {
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    font-size: 1rem;
+    background-color: rgba(194, 206, 211, 0.75);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    text-shadow: #02141b 2px 0 2px;
+    display: none;
+    z-index: 10;
+
+}
+
+.galerie main article li a:hover p {
+    display: block;
+}
+
+/*--------------FIN GALERIE ----------------*/
