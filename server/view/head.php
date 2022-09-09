@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title><?= $pageData['lang']; ?></title>
     <meta name="DESCRIPTION" content="<?= $pageData['description'] ?>">
-    <meta name="author" content=" <?= $pageData['content'] ?>">
+    <meta name="author" content=" <?= $pageData['author'] ?>">
     <!-- web site icon -->
     <LINK REL="icon" href=" <?= $pageData['icon'] ?>">
 

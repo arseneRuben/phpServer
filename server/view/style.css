@@ -1,7 +1,14 @@
-h2 {
-    background-color: black;
+header>h2 {
+    background-color: blanchedalmond;
     color: white;
     padding: 10px;
+    text-align: center;
+    height: 40px;
+    vertical-align: middle;
+}
+
+h3 {
+    display: inline;
 }
 
 footer {
@@ -13,4 +20,55 @@ footer {
 nav a {
     color: aliceblue;
     text-decoration: none;
+}
+
+.error {
+    background-color: blanchedalmond;
+    color: brown;
+    padding: 5px;
+}
+
+form.form {
+    width: 200px;
+    margin: auto;
+
+
+}
+
+.rounded-input {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+input {
+    padding: 10px;
+    border: 0;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    margin: auto;
+
+}
+
+img.logo {
+    color: white;
+    text-decoration: inherit;
+    width: 60px;
+    border-radius: 10px;
+}
+
+button {
+
+    /* remove default behavior */
+    appearance: none;
+    -webkit-appearance: none;
+
+    /* usual styles */
+    padding: 10px;
+    border: none;
+    background-color: #3F51B5;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 5px;
+    width: 100%;
+
 }

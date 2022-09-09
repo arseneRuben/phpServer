@@ -22,7 +22,6 @@ function main()
             $pageData['content'] = "Découvrez et connectez-vous avec des vendeurs agréés sur Whatsapp. Et bénéficiez de la même expérience que lorsque vous effectuez vos achats dans un magasin.
 Sur Buyam, vous pouvez désormais interagir avec un vendeur de la même manière que vous le feriez dans un magasin : négocier le prix et obtenir la meilleure offre pour le produit ; tout cela en ligne !";
 
-
             $pageData['title'] = COMPANY_NAME . "-Home page";
             // Affiche la page
             webpage::render($pageData);
@@ -30,7 +29,7 @@ Sur Buyam, vous pouvez désormais interagir avec un vendeur de la même manière
             break;
         case 1:
             // LOGIN PAGE
-            $pageData['content'] = "Sign In";
+            // $pageData['content'] = "<h1>Sign In</h1>";
             $pageData['title'] = COMPANY_NAME . "-Login page";
             // Affiche la page
             users::login();
@@ -39,6 +38,16 @@ Sur Buyam, vous pouvez désormais interagir avec un vendeur de la même manière
             // VERIFICATION
 
             users::loginVerifiy();
+            break;
+        case 3:
+            // VERIFICATION
+
+            users::register();
+            break;
+        case 4:
+            // VERIFICATION
+
+            users::registerVerify();
             break;
         case 10:
             // ABOUT

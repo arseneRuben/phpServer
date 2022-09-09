@@ -3,6 +3,7 @@
 class users
 {
 
+    private static $errors = "";
     public function __construct()
     {
     }
@@ -15,17 +16,52 @@ class users
      * print login form
      */
 
-    public static function login($msg = "")
+    public static function login($msg = "", $previousData = [])
     {
+        if ($previousData === []) {
+            $previousData = [
+                'email' => '',
+                'pwd' => ''
+            ];
+        }
         $pageData = DEFAULT_PAGE_DATA;
         $pageData['title'] = COMPANY_NAME . "-Sign in";
         $pageData['content'] = <<<HTML
             <h2  class="error"> {$msg} </h2>
-            <form action="index.php" method="POST">
+            <form class="form" action="index.php" method="POST">
+                <input type="hidden" name="form_id" value="login_form"/>
                 <input type="hidden" name="op" value="2"/>
-            <label>email</label> <input type="email" name="email" maxlength="126" required/> <br>
-            <label>password</label> <input type="password" name="pwd" maxlength="8" required/> <br>
-            <button> submit </button>
+                <label>email</label> <input class = "rounded-input"  type="email" placeholder="email"  name="email" maxlength="126" value="{$previousData['email']}" required/> <br>
+                <label>password</label> <input class = "rounded-input"  placeholder="mot de passe" type="password" name="pwd"  value="{$previousData['pwd']}" maxlength="126" required/> <br>
+                <button> submit </button>
+                <input type="reset" value="annuler"/>
+            </form>
+        HTML;
+        webpage::render($pageData);
+    }
+
+    /**
+     * print login form
+     */
+
+    public static function register($msg = "")
+    {
+        $pageData = DEFAULT_PAGE_DATA;
+        $pageData['title'] = COMPANY_NAME . "-Sign in";
+        $pageData['content'] = <<<HTML
+
+            <form class="form" action="index.php?op=2" method="POST">
+            <h3  class="error"> {$msg} </h3>
+
+                <input type="hidden" name="form_id" value="login_form"/>
+                <input type="hidden" name="op" value="2"/>
+                <fieldset>
+                <label>email</label> <input class = "rounded-input"  type="email" placeholder="email"  name="email" maxlength="126" required/> <br>
+                </fieldset>
+                <fieldset>
+                <label>password</label> <input class = "rounded-input"  placeholder="mot de passe" type="password" name="pwd" maxlength="126" required/> <br>
+                </fieldset>
+                <button> submit </button>
                 <input type="reset" value="annuler"/>
             </form>
         HTML;
@@ -34,6 +70,9 @@ class users
 
     public static function loginVerifiy()
     {
+        if (!isset($_REQUEST['form_id']) || $_REQUEST['form_id'] != "login_form") {
+            crash(400, "Mauvais formulaire recu");
+        }
         // Supose that it comes from a bd
         $users = [
             ['id' => 0, 'email' => 'Yannick@gmail.com', 'pw' => '12345678'],
@@ -41,72 +80,83 @@ class users
             ['id' => 2, 'email' => 'Christian@victoire.ca', 'pw' => '22222222'],
         ];
         //recuperer les valeurs du formulaire
-        if (checkInput("pwd",  $_REQUEST['pwd'], 126, 0, true)) {
+        if (users::checkInput("pwd",   126, 8, true) && users::checkInput("email", 126, 0, true)) {
+            //   if ( strlen($_REQUEST['pwd']) > 126) {
+            $password = htmlspecialchars($_REQUEST['pwd']);
+
             // if (isset($_REQUEST['pwd']) and strlen($_REQUEST['pwd']) <= 126 and filter_var($_REQUEST['pwd'], FILTER_VALIDATE_EMAIL)) {
-            $pwd = htmlspecialchars($_REQUEST['pwd']);
+            $email = htmlspecialchars($_REQUEST['email']);
+            foreach ($users as $user) {
+                if (($user['email'] === $email) && ($user['pw'] === $password)) {
+                    $pageData = DEFAULT_PAGE_DATA;
+                    $pageData['title'] = "Welcome!";
+                    $pageData['content'] = "Vous etes connecte";
+                    webpage::render($pageData);
+                }
+            }
+            users::$errors .= "Parametre de connextion invalides";
+            $previousData = [
+                'email' => $email,
+                'pwd' => $password,
+            ];
+            users::login(users::$errors, $previousData);
         } else {
-            if (filter_var(!filter_var($_REQUEST['pwd'], FILTER_VALIDATE_EMAIL)))
-                echo "email eronne";
-            crash(400, "Erreur dans users.php loginVerify(), mot de passe non recu oi trop long , max 8 caracteres");
+            //crash(400, "Erreur dans users.php loginVerify(), email non recu oi trop long , max 126 caracteres");
+            users::login(users::$errors);
         }
         //recuperer les valeurs du formulaire
-        if (isset($_REQUEST['email']) and strlen($_REQUEST['pwd']) <= 126) {
-            $email = htmlspecialchars($_REQUEST['email']);
-        } else {
-            crash(400, "Erreur dans users.php loginVerify(), email non recu oi trop long , max 126 caracteres");
-        }
+    }
 
+    /**
+     * print login form
+     */
 
-
-        $password = $_POST['pwd'];
-        foreach ($users as $user) {
-            if (($user['email'] === $email) && ($user['pw'] === $password)) {
-                $pageData = DEFAULT_PAGE_DATA;
-                $pageData['title'] = "Welcome!";
-                $pageData['content'] = "Vous etes connecte";
-                webpage::render($pageData);
-            }
-        }
-        users::login("Erreur , mauvais mot de passe et/ou email invalide");
+    public static function registerVerify($msg = "")
+    {
+        $pageData = DEFAULT_PAGE_DATA;
+        $pageData['title'] = COMPANY_NAME . "-Sign in";
+        $users = [
+            ['id' => 0, 'email' => 'Yannick@gmail.com', 'pw' => '12345678'],
+            ['id' => 1, 'email' => 'Victor@test.com', 'pw' => '11111111'],
+            ['id' => 2, 'email' => 'Christian@victoire.ca', 'pw' => '22222222'],
+        ];
+        //   webpage::render($pageData);
     }
 
 
     /**
      * $name : The name of the input
-     * $input : the value oh that input
      * $maxLength : the max lenght of the input if it exists
      * $minLength : the max lenght of the input if it exists
      * $required : specifies if the input is requered
      */
     //  ecrire une fonction de verification
-    public static function checkInput($name, $input, $maxLength = 0, $minLength = -1, $required)
+    public static function checkInput($name,  $maxLength = 0, $required)
     {
-        $errors = "";
-        if (!isset($input)) {
-            if ($required) {
-                $errors .= $name . " is required \n";
-            }
+
+
+        if (!isset($_REQUEST[$name])) {
+
+            users::$errors .= $name . " is required <br/>";
+            crash(400,  users::$errors);
         } else {
-            $input = trim($input);
+            $input = trim($_REQUEST[$name]);
             if ($required && ($input === '')) {
-                $errors .= $name . " is required\n";
+                users::$errors .= $name . " is required<br/>";
+                crash(400,  users::$errors);
             }
-            if (($maxLength != 0) && (strlen($input) < $maxLength)) {
-                $errors .= $name . " must have at must " . $maxLength . "characters\n";
+            if (($maxLength != 0) && (strlen($input) > $maxLength)) {
+                users::$errors  .= $name . " must have at must " . $maxLength . "characters<br/>";
+                crash(400,    users::$errors);
             }
-            if (($minLength > 0) && (strlen($input) < $minLength)) {
-                $errors .= $name . " must have at least " . $minLength . "characters\n";
-            }
+
             $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";
-            if (!preg_match($pattern, $input)) {
-                $errors .= $input . "is an  invalid Email\n";
+            if ($name === "email" && !preg_match($pattern, $input)) {
+                users::$errors .= $input . "is an  invalid Email\n";
+                crash(400,    users::$errors);
             }
         }
-        if (strlen($errors) > 0) {
-            echo $errors;
-            return false;
-        } else {
-            return true;
-        }
+
+        return htmlspecialchars($input);
     }
 }
