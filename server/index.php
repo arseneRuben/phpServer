@@ -4,13 +4,14 @@ define("INDEX_LOADED", true); // Indique que l'entree du system a ete correcteme
 require_once "globals.php";
 require_once "tools.php";
 require_once "view/webpage.php";
+require_once "users.php";
 
 function main()
 {
     logVisitor(LOG_FILE);
     $pageData = DEFAULT_PAGE_DATA;
-    if (isset($_GET['op'])) {
-        $op = $_GET['op'];
+    if (isset($_REQUEST['op'])) {
+        $op = $_REQUEST['op'];
     } else {
         $op = 0;
     }
@@ -26,6 +27,18 @@ Sur Buyam, vous pouvez désormais interagir avec un vendeur de la même manière
             // Affiche la page
             webpage::render($pageData);
 
+            break;
+        case 1:
+            // LOGIN PAGE
+            $pageData['content'] = "Sign In";
+            $pageData['title'] = COMPANY_NAME . "-Login page";
+            // Affiche la page
+            users::login();
+            break;
+        case 2:
+            // VERIFICATION
+
+            users::loginVerifiy();
             break;
         case 10:
             // ABOUT

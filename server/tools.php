@@ -27,7 +27,7 @@ function logVisitor($log_file)
 
 function crash($http_code, $msg)
 {
-    header('HTTP/1.0 ' . $http_code . ' ' . $msg);
+    header('HTTP/1.0  ' . $http_code . ' ' . $msg);
     die($msg);
 }
 

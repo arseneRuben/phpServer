@@ -1,6 +1,3 @@
  <!-- PAGE HEADER -->
- <header>
-     <h2>
-         <?= $pageData['title'] ?>
-     </h2>
+ <?php require_once 'view/banner.php'; ?>
  </header>

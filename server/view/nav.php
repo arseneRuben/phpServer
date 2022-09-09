@@ -14,4 +14,6 @@
      &#124;
      <a href='index.php?op=51'>Suivez nous sur facebook</a>
      &#124;
+     <a href='index.php?op=1'>Sign In</a>
+     &#124;
  </nav>

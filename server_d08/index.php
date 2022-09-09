@@ -37,26 +37,36 @@ function main()
 
             break;
         case 62:
-            // GALERIE
-            $pageData['class'] = 'galerie';
-            $pageData['content'] = file_get_contents('view/galerie/index.html');
-            $pageData['title'] = COMPANY_NAME . "-galerie";
+            // DETAIL
+            $pageData['class'] = 'detail';
+            $pageData['content'] = file_get_contents('view/detail/index.html');
+            $pageData['title'] = COMPANY_NAME . "-En detail";
             // Affiche la page
             webpage::render($pageData);
             break;
+
+
         case 63:
             // COMPARAISON
             $pageData['class'] = 'tableau';
             $pageData['content'] = file_get_contents('view/tableau/index.html');
-            $pageData['title'] = COMPANY_NAME . "-comparaison";
+            $pageData['title'] = COMPANY_NAME . "-Comparaison";
             // Affiche la page
             webpage::render($pageData);
             break;
         case 64:
-            // COMPARAISON
+            // CONTACT
             $pageData['class'] = 'contact';
             $pageData['content'] = file_get_contents('view/contact/index.html');
-            $pageData['title'] = COMPANY_NAME . "-reservation";
+            $pageData['title'] = COMPANY_NAME . "-Reservation";
+            // Affiche la page
+            webpage::render($pageData);
+            break;
+        case 65:
+            // GALERIE
+            $pageData['class'] = 'galerie';
+            $pageData['content'] = file_get_contents('view/galerie/index.html');
+            $pageData['title'] = COMPANY_NAME . "-Galerie";
             // Affiche la page
             webpage::render($pageData);
             break;
