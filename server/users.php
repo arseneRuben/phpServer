@@ -92,6 +92,7 @@ class users
                     $pageData['title'] = "Welcome!";
                     $pageData['content'] = "Vous etes connecte";
                     webpage::render($pageData);
+                    return;
                 }
             }
             users::$errors .= "Parametre de connextion invalides";
