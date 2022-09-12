@@ -44,29 +44,58 @@ class users
      * print login form
      */
 
-    public static function register($msg = "")
+    public static function register($msg = "", $previousData = [])
     {
+        if ($previousData === []) {
+            $previousData = [
+                'password' => '',   // C'est dans ce champ que l'on va memoriser les erreur liees au mot de passe
+                'password_repeated' => '',   // C'est dans ce champ que l'on va memoriser les erreur liees au mot de passe
+                'email' => '',
+                'firstname' => '',
+                'lastname' => '',
+                'legacy' => ''
+
+            ];
+        }
+
         $pageData = DEFAULT_PAGE_DATA;
         $pageData['title'] = COMPANY_NAME . "-Sign in";
         $pageData['content'] = <<<HTML
+            <h2  class="error"> {$msg} </h2>
+                <form   class="form"  action="index.php?op=4" class="register" method="POST" id="form_register">
+                    <input type="hidden" name="form_id" value="form_register">
+                    <input type="hidden" name="op" value="4"/>
+                <fieldset class="line-form">
+                 <input type="text" maxlenght="50" name="firstname" placeholder= "nom prenom" class="rounded-input"  value="{$previousData['firstname']}"/>
+                 <input type="text" maxlenght="50" name="lastname" placeholder= "nom nom" class="rounded-input"  value="{$previousData['lastname']}"/>
+                 </fieldset>
+                <fieldset class="line-form password">
 
-            <form class="form" action="index.php?op=2" method="POST">
-            <h3  class="error"> {$msg} </h3>
 
-                <input type="hidden" name="form_id" value="login_form"/>
-                <input type="hidden" name="op" value="2"/>
-                <fieldset>
-                <label>email</label> <input class = "rounded-input"  type="email" placeholder="email"  name="email" maxlength="126" required/> <br>
-                </fieldset>
-                <fieldset>
-                <label>password</label> <input class = "rounded-input"  placeholder="mot de passe" type="password" name="pwd" maxlength="126" required/> <br>
-                </fieldset>
-                <button> submit </button>
-                <input type="reset" value="annuler"/>
-            </form>
-        HTML;
+            <input id="email"  type="email"  name="email" maxlenght="126" size="30" autofocus    value="{$previousData['email']}" placeholder="Email"  class="rounded-input"><br>
+
+                <input type="password" id="password" name="password" maxlength="8"  placeholder="mot de passe - max 8 car." size = "30"  value="{$previousData['password_repeated']}" class="rounded-input"><br>
+
+            <input  type="password" id="password_repeated" name="password_repeated" maxlength="8"  placeholder="repetez le mot de passe" size="30"  value="{$previousData['password_repeated']}" class="rounded-input"><br>
+
+
+
+        </fieldset>
+        <fieldset class="line-form">
+
+                     <label for="info">J'ai lu et j'accepte les condition d'utilisation
+                     </label>
+                     <input type="checkbox" name="info" type="info"  checked="checked" id="info"  class="rounded-input" />
+             </fieldset>
+             <fieldset class="line-form">
+             <input button type="submit" value="Soumettre"  class="rounded-input"/><input type="reset"  class="rounded-input" value="Annuler"/>
+             </fieldset>
+
+        </form>
+    HTML;
         webpage::render($pageData);
     }
+
 
     public static function loginVerifiy()
     {
@@ -112,16 +141,70 @@ class users
      * print login form
      */
 
-    public static function registerVerify($msg = "")
+    public static function registerVerify($msg = "", $previousData = [])
     {
-        $pageData = DEFAULT_PAGE_DATA;
-        $pageData['title'] = COMPANY_NAME . "-Sign in";
-        $users = [
-            ['id' => 0, 'email' => 'Yannick@gmail.com', 'pw' => '12345678'],
-            ['id' => 1, 'email' => 'Victor@test.com', 'pw' => '11111111'],
-            ['id' => 2, 'email' => 'Christian@victoire.ca', 'pw' => '22222222'],
-        ];
-        //   webpage::render($pageData);
+
+
+        if (!isset($_REQUEST['form_id']) || $_REQUEST['form_id'] != "form_register") {
+            crash(400, "Mauvais formulaire recu");
+        }
+
+
+
+
+        $previousData = users::checkInputText("lastname", $previousData);
+        $previousData = users::checkInputText("password", $previousData);
+        $previousData = users::checkInputText("password_repeated", $previousData);
+        $previousData = users::checkInputText("firstname", $previousData);
+        $previousData = users::checkInputText("email", $previousData);
+
+
+        if (isset($_POST['info']) && $_POST['info'] != '')
+            $previousData['info'] = $_POST['info'];
+
+        else
+            users::$errors .= "Champ manquant : les condition d'utilisation  <br/>";
+
+
+        if (isset($_POST["password"]) && isset($_POST["password_repeated"]) && ($_POST["password"] !== $_POST["password_repeated"])) {
+            users::$errors .= " Le mot de passe et sa verification ne sont pas equivalents <br/>";
+        }
+
+
+        users::register(users::$errors, $previousData);
+    }
+
+
+
+    private static function checkInputText($name, $previousData)
+    {
+        if (strlen($_POST[$name]) != 0)
+
+
+
+            $previousData[$name] = $_POST[$name];
+        else {
+            switch ($name) {
+                case "email":
+                    users::$errors .= "Veuillez indiquer votre adresse email !<br/>";
+                    break;
+                case "firstname":
+                    users::$errors .= "Veuiller indiquer votre nom complet ! <br/>";
+                    break;
+                case "pw1":
+                    users::$errors .= "Veuiller indiquer votre mot de passe de verificagtion !<br/>";
+                    break;
+                case "pw":
+                    users::$errors .= "Veuiller indiquer votre mot de passe !<br/>";
+                    break;
+            }
+            $previousData[$name] = "";
+        }
+
+
+
+
+        return $previousData;
     }
 
 

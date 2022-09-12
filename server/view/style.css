@@ -17,9 +17,15 @@ footer {
     padding: 10px;
 }
 
+nav {
+    text-align: center;
+}
+
 nav a {
     color: aliceblue;
     text-decoration: none;
+    padding: 0 0.5rem;
+
 }
 
 .error {
@@ -29,10 +35,10 @@ nav a {
 }
 
 form.form {
-    width: 200px;
+    width: 40%;
     margin: auto;
-
-
+    text-align: center;
+    border: thick double #32a1ce;
 }
 
 .rounded-input {
@@ -44,7 +50,7 @@ input {
     padding: 10px;
     border: 0;
     box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
-    width: 100%;
+    width: 70%;
     margin: auto;
 
 }
@@ -71,4 +77,8 @@ button {
     border-radius: 5px;
     width: 100%;
 
+}
+
+h2.error {
+    text-align: center;
 }

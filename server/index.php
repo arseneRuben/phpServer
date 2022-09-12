@@ -40,7 +40,7 @@ Sur Buyam, vous pouvez désormais interagir avec un vendeur de la même manière
             users::loginVerifiy();
             break;
         case 3:
-            // VERIFICATION
+            // SIGN UP
 
             users::register();
             break;

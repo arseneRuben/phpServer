@@ -16,4 +16,6 @@
      &#124;
      <a href='index.php?op=1'>Sign In</a>
      &#124;
+     <a href='index.php?op=3'>Sign Up</a>
+
  </nav>
