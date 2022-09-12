@@ -9,6 +9,7 @@ define('COMPANY_POSTAL_CODE', 'J0P 1T0');
 define('COMPANY_EMAIL', 'fopoar@gmail.com');
 define('COMPANY_PHONE_NUMBER', '+145876598568');
 define('LOG_FILE', 'homeviews.txt');
+define('MAX_LOGIN_ATEMPT', 3);
 define('VISITOR_LOG_FILE', 'visitors.log');
 
 

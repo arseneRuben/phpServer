@@ -12,6 +12,13 @@ class users
     public function __destruct()
     {
     }
+
+
+    public static function logout()
+    {
+        $_SESSION['email'] = null;
+        header("location:index.php");
+    }
     /**
      * print login form
      */
@@ -181,21 +188,36 @@ class users
         ];
         //recuperer les valeurs du formulaire
         if (users::checkInput("pwd",   126, 8, true) && users::checkInput("email", 126, 0, true)) {
-            //   if ( strlen($_REQUEST['pwd']) > 126) {
             $password = htmlspecialchars($_REQUEST['pwd']);
 
-            // if (isset($_REQUEST['pwd']) and strlen($_REQUEST['pwd']) <= 126 and filter_var($_REQUEST['pwd'], FILTER_VALIDATE_EMAIL)) {
             $email = htmlspecialchars($_REQUEST['email']);
+
             foreach ($users as $user) {
                 if (($user['email'] === $email) && ($user['pw'] === $password)) {
                     $pageData = DEFAULT_PAGE_DATA;
                     $pageData['title'] = "Welcome!";
                     $pageData['content'] = "Vous etes connecte";
+                    $_SESSION["email"] = $email;
+
                     webpage::render($pageData);
                     return;
                 }
             }
-            users::$errors .= "Parametre de connextion invalides";
+
+            if (isset($_SESSION['tentatives'])) {
+                $_SESSION['tentatives']--;
+                $count = $_SESSION['tentatives'];
+                users::$errors .= "Il vous reste  $count  tentatives de connexion<br/>";
+            } else {
+                $_SESSION['tentatives'] = MAX_LOGIN_ATEMPT;
+            }
+
+            if ($_SESSION['tentatives'] <= 0) {
+                users::$errors .= "Le nombre de tentatives de connexion atteint! </br>  Vueillz reassayer plus tard!<br/>";
+                $_SESSION['tentatives'] = MAX_LOGIN_ATEMPT;
+            }
+
+            users::$errors .= "Parametre de connextion invalides! <br/>";
             $previousData = [
                 'email' => $email,
                 'pwd' => $password,

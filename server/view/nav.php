@@ -14,8 +14,17 @@
      &#124;
      <a href='index.php?op=51'>Suivez nous sur facebook</a>
      &#124;
-     <a href='index.php?op=1'>Sign In</a>
-     &#124;
-     <a href='index.php?op=3'>Sign Up</a>
+     <?php
+        if (isset($_SESSION['email'])) {
+
+            echo '<span>Connecte entant que' . $_SESSION["email"] . '</span>';
+            echo '<a href="index.php?op=5">Log out</a>  &#124;';
+        } else {
+            echo ' <a href="index.php?op=1">Sign In</a>  &#124;
+            <a href="index.php?op=3">Sign Up</a>
+       ';
+        }
+
+        ?>
 
  </nav>

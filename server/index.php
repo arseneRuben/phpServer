@@ -1,4 +1,12 @@
 <?php
+ini_set('session.gc_maxlifetime', 60);
+
+// each client should remember their session id for EXACTLY 1 hour
+session_set_cookie_params(60);
+session_start();
+// server should keep session data for AT LEAST 1 hour
+
+
 define("INDEX_LOADED", true); // Indique que l'entree du system a ete correctement franchis
 
 require_once "globals.php";
@@ -8,6 +16,7 @@ require_once "users.php";
 
 function main()
 {
+
     logVisitor(LOG_FILE);
     $pageData = DEFAULT_PAGE_DATA;
     if (isset($_REQUEST['op'])) {
@@ -53,6 +62,11 @@ function main()
             // VERIFICATION
 
             users::registerVerify();
+            break;
+        case 5:
+            // VERIFICATION
+
+            users::logout();
             break;
         case 10:
             // ABOUT
