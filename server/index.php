@@ -17,11 +17,16 @@ function main()
     }
     switch ($op) {
         case 0:
-
+            $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+            if ($lang == 'en') {
+                $pageData['content'] = "Discover and connect with trusted sellers on Whatsapp. And get the same experience as when shopping in a store.
+                On Buyam, you can now interact with a seller the same way you would in a store: negotiate the price and get the best deal for the product; all this online!";
+            }
+            if ($lang == 'fr') {
+                $pageData['content'] = "Découvrez et connectez-vous avec des vendeurs agréés sur Whatsapp. Et bénéficiez de la même expérience que lorsque vous effectuez vos achats dans un magasin.
+                Sur Buyam, vous pouvez désormais interagir avec un vendeur de la même manière que vous le feriez dans un magasin : négocier le prix et obtenir la meilleure offre pour le produit ; tout cela en ligne !";
+            }
             // HOME PAGE
-            $pageData['content'] = "Découvrez et connectez-vous avec des vendeurs agréés sur Whatsapp. Et bénéficiez de la même expérience que lorsque vous effectuez vos achats dans un magasin.
-Sur Buyam, vous pouvez désormais interagir avec un vendeur de la même manière que vous le feriez dans un magasin : négocier le prix et obtenir la meilleure offre pour le produit ; tout cela en ligne !";
-
             $pageData['title'] = COMPANY_NAME . "-Home page";
             // Affiche la page
             webpage::render($pageData);

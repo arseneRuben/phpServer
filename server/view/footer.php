@@ -4,6 +4,8 @@
 
  </p>' ?></p>
     <p> <?php
+        $pageData['compteVues'] =  viewCount(VISITOR_LOG_FILE);
+
         echo $pageData['compteVues'] . " Visiteur(s)";
 
         ?> </p>

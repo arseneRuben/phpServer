@@ -1,6 +1,7 @@
 <?php
 function viewCount($filename)
 {
+
     $visit = null;
     if (file_exists($filename)) {
         $visit = file_get_contents($filename);
@@ -22,7 +23,7 @@ function redirect($url)
 
 function logVisitor($log_file)
 {
-    file_put_contents("log" . DIRECTORY_SEPARATOR . $log_file, date(DATE_RFC2822) . "\n", FILE_APPEND);
+    file_put_contents("log" . DIRECTORY_SEPARATOR . $log_file, date(DATE_RFC2822) . " " . $_SERVER['REMOTE_ADDR'] . "\n", FILE_APPEND);
 }
 
 function crash($http_code, $msg)

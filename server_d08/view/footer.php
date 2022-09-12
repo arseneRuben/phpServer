@@ -19,6 +19,8 @@
     </div>
 
     <p> <?php
+        $pageData['compteVues'] =  viewCount($pageData['VISITOR_LOG_FILE']);
+        var_dump(viewCount($pageData['VISITOR_LOG_FILE']));
         echo $pageData['compteVues'] . " Visiteur(s)";
 
         ?> </p>

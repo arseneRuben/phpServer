@@ -58,6 +58,48 @@ class users
 
             ];
         }
+
+
+        $radioLanguage = ' ';
+        if ($previousData['language'] ==  'fr') {
+
+            $radioLanguage .= '  <div>
+                <input type="radio" id="fr" name="language" value="fr"  checked class="rounded-input">
+                <label for="fr">English</label>
+                </div>';
+        } else {
+            $radioLanguage .= '  <div>
+            <input type="radio" id="fr" name="language" value="fr"  class="rounded-input">
+            <label for="fr">English</label>
+            </div>';
+        }
+        if ($previousData['language'] ==  'en') {
+
+            $radioLanguage .= '  <div>
+                <input type="radio" id="en" name="language" value="en"  checked class="rounded-input">
+                <label for="en">English</label>
+                </div>';
+        } else {
+            $radioLanguage .= '  <div>
+            <input type="radio" id="en" name="language" value="en"  class="rounded-input">
+            <label for="en">English</label>
+            </div>';
+        }
+
+        if ($previousData['language'] ==  'other') {
+
+            $radioLanguage .= '  <div>
+                <input type="radio" id="other" name="language" value="other"  checked class="rounded-input">
+                <label for="other">Autre</label>
+                </div>';
+        } else {
+            $radioLanguage .= '  <div>
+            <input type="radio" id="other" name="language" value="other"  class="rounded-input">
+            <label for="other">Autre</label>
+            </div>';
+        }
+
+
         $pays = [
             [1, 'CA', 'Canada'],
             [2, 'US', 'États-Unis'],
@@ -76,7 +118,7 @@ class users
         $pageData['title'] = COMPANY_NAME . "-Sign in";
         $pageData['content'] = <<<HTML
             <h2  class="error"> {$msg} </h2>
-                <form   class="form"  action="index.php?op=4" class="register" method="POST" id="form_register">
+                <form   class="form"  action="index.php" class="register" method="POST" id="form_register">
                     <input type="hidden" name="form_id" value="form_register">
                     <input type="hidden" name="op" value="4"/>
                 <fieldset class="line-form">
@@ -110,16 +152,8 @@ class users
                     <div>
 
 
-                <input type="radio" id="fr" name="language" value="fr"   class="rounded-input">
-                <label for="fr">Francais</label>
-                </div>
-                <div>
-                <input type="radio" id="en" name="language" value="en"  class="rounded-input">
-                <label for="en">English</label>
-                </div>
-                <div>
-                    <input type="radio" id="other" name="language" value="other" >
-                    <label for="other">Autre</label>
+                 <div>
+                    {$radioLanguage}
                 </div>
 
 
@@ -209,7 +243,35 @@ class users
         }
 
 
-        users::register(users::$errors, $previousData);
+        //recuperer les valeurs du formulaire
+        if (
+            users::checkInput("password",   126, 8, true) &&
+            users::checkInput("password_repeated", 126, 0, true)  &&
+            users::checkInput("firstname",   40, 8, true) &&
+            users::checkInput("lastname", 40, 0, true)  &&
+            users::checkInput("email", 40, 0, true)
+        ) {
+            $password = htmlspecialchars($_REQUEST['password']);
+
+            //Verifion si l'email n'est pas deja utilise
+            $users = [
+                ['id' => 0, 'email' => 'Yannick@gmail.com', 'pw' => '12345678'],
+                ['id' => 1, 'email' => 'Victor@test.com', 'pw' => '11111111'],
+                ['id' => 2, 'email' => 'Christian@victoire.ca', 'pw' => '22222222'],
+            ];
+            foreach ($users as $user) {
+                if ($_POST['email'] == $user['email']) {
+                    users::$errors .= "Cet email est deja pris </br>";
+                    break;
+                }
+            }
+
+
+            users::register(users::$errors, $previousData);
+        } else {
+            //crash(400, "Erreur dans users.php loginVerify(), email non recu oi trop long , max 126 caracteres");
+            users::register(users::$errors);
+        }
     }
 
 
