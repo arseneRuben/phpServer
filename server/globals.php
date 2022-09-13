@@ -14,6 +14,7 @@ define('VISITOR_LOG_FILE', 'visitors.log');
 
 
 
+
 const DEFAULT_PAGE_DATA = [
     'lang' => 'fr-CA',
     'title' => 'ClassicModels.com - Acceuil',

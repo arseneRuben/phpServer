@@ -17,13 +17,25 @@
      <?php
         if (isset($_SESSION['email'])) {
 
-            echo '<span>Connecte entant que' . $_SESSION["email"] . '</span>';
+            echo '<span>Connecte entant que ' . $_SESSION["email"] . '</span>';
             echo '<a href="index.php?op=5">Log out</a>  &#124;';
         } else {
             echo ' <a href="index.php?op=1">Sign In</a>  &#124;
             <a href="index.php?op=3">Sign Up</a>
        ';
         }
+
+
+        // last visit
+        if (isset($_COOKIE['lastVisit'])) {
+            $visite = $_COOKIE['lastVisit'];
+            echo "<span>Dernière visite: " . $visite . "</span>";
+        } else {
+
+            echo "<span> Bienvenue, c'est votre première visite</span>";
+        }
+        $inFiveYears = 60 * 60 * 24 * 365 * 5 + time();
+        setcookie('lastVisit', date("G:i - d/m/y"), $inFiveYears);
 
         ?>
 

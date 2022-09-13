@@ -24,6 +24,10 @@ function main()
     } else {
         $op = 0;
     }
+
+
+
+
     switch ($op) {
         case 0:
             $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
