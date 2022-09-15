@@ -177,7 +177,7 @@ class users
 
 
         //recuperer les valeurs du formulaire
-        if (checkInput("pwd",   126, 8, true) && checkInput("email", 126, 0, true)) {
+        if (checkInput("pwd",   126, 8, 1, true) && checkInput("email", 126, 0, 1, true)) {
             $password = htmlspecialchars($_REQUEST['pwd']);
             $email = htmlspecialchars($_REQUEST['email']);
             $results = $DB->query("Select * from users where email='$email' and pw='$password' ;");
@@ -266,7 +266,9 @@ class users
             if (count($users) == 1)
                 $msg .= "Cet email est deja pris </br>";
             if (strlen($msg) == 0) {
-                users::login("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
+                if ($DB->query("INSERT INTO users(email, fullname,    pw, country, language) VALUES
+                                                ('$email','$fullname', '$password','$country', '$language')"))
+                    users::login("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
             } else {
                 users::register($msg, $_REQUEST);
             }

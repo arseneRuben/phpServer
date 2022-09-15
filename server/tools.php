@@ -48,10 +48,7 @@ function download($filename)
 //  ecrire une fonction de verification
 function checkInput($name,  $maxLength = 0, $minLength = 1000, $required, $errors = "")
 {
-
-
     if (!isset($_REQUEST[$name])) {
-
         $errors .= $name . " is required <br/>";
         crash(400,  $errors);
     } else {
@@ -64,7 +61,7 @@ function checkInput($name,  $maxLength = 0, $minLength = 1000, $required, $error
             $errors  .= $name . " must have at must " . $maxLength . "characters<br/>";
             crash(400,   $errors);
         }
-        if (($minLength != 1000) && (strlen($input) < $maxLength)) {
+        if (($minLength != 1000) && (strlen($input) < $minLength)) {
             $errors  .= $name . " must have at most " . $minLength . "characters<br/>";
             crash(400,   $errors);
         }
