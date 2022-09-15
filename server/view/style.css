@@ -82,3 +82,9 @@ button {
 h2.error {
     text-align: center;
 }
+
+footer div {
+    display: inline;
+    padding-left: 10%;
+    text-align: center;
+}

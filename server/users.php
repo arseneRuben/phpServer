@@ -1,5 +1,5 @@
 <?php
-
+require_once "db_pdo.php";
 class users
 {
 
@@ -53,42 +53,42 @@ class users
 
     public static function register($msg = "", $previousData = [])
     {
-        if ($previousData === []) {
-            $previousData = [
+
+        if ($previousData === ['op' => '3']) {
+            $previousData = array_merge($previousData, [
                 'password' => '',   // C'est dans ce champ que l'on va memoriser les erreur liees au mot de passe
                 'password_repeated' => '',   // C'est dans ce champ que l'on va memoriser les erreur liees au mot de passe
                 'email' => '',
-                'firstname' => '',
-                'lastname' => '',
-                'legacy' => '',
-                'info' => ''
-
-            ];
+                'fullname' => '',
+                'country' => '',
+                'spam_ok' => '',
+                "language" => ''
+            ]);
         }
 
 
         $radioLanguage = ' ';
-        if ($previousData['language'] ==  'fr') {
+        if ($previousData["language"] ==  'fr') {
 
             $radioLanguage .= '  <div>
-                <input type="radio" id="fr" name="language" value="fr"  checked class="rounded-input">
-                <label for="fr">English</label>
+                <input type="radio" id="fr" name="language" value="fr"   class="" checked />
+                <label for="fr">Francais</label>
                 </div>';
         } else {
             $radioLanguage .= '  <div>
-            <input type="radio" id="fr" name="language" value="fr"  class="rounded-input">
-            <label for="fr">English</label>
+            <input type="radio" id="fr" name="language" value="fr"  class="" checked />
+            <label for="fr">Francais</label>
             </div>';
         }
         if ($previousData['language'] ==  'en') {
 
             $radioLanguage .= '  <div>
-                <input type="radio" id="en" name="language" value="en"  checked class="rounded-input">
+                <input type="radio" id="en" name="language" value="en"  class="" checked />
                 <label for="en">English</label>
                 </div>';
         } else {
             $radioLanguage .= '  <div>
-            <input type="radio" id="en" name="language" value="en"  class="rounded-input">
+            <input type="radio" id="en" name="language" value="en"  class=""  />
             <label for="en">English</label>
             </div>';
         }
@@ -96,28 +96,25 @@ class users
         if ($previousData['language'] ==  'other') {
 
             $radioLanguage .= '  <div>
-                <input type="radio" id="other" name="language" value="other"  checked class="rounded-input">
+                <input type="radio" id="other" name="language" value="other"  class="" checked />
                 <label for="other">Autre</label>
                 </div>';
         } else {
             $radioLanguage .= '  <div>
-            <input type="radio" id="other" name="language" value="other"  class="rounded-input">
+            <input type="radio" id="other" name="language" value="other"  class=""/>
             <label for="other">Autre</label>
             </div>';
         }
 
 
-        $pays = [
-            [1, 'CA', 'Canada'],
-            [2, 'US', 'États-Unis'],
-            [3, 'MX', 'Mexique'],
-            [4, 'FR', 'France'],
-            [5, 'AU', 'Autre']
-        ];
+        $DB = new db_pdo();
+        $DB->connect();
+        $pays = $DB->table("countries");
+
         $selectPays = '<SELECT name="country" class="rounded-input">';
-        $selectPays .= '<option> Votre nationalite </option>';
+        $selectPays .= '<option value=""> Votre nationalite </option>';
         foreach ($pays as $p) {
-            $selectPays .= '<option value="' . $p[1] . '" >' . $p[2] . '</option>';
+            $selectPays .= '<option value="' . $p->code . '" >' . $p->name . '</option>';
         }
         $selectPays .= '</SELECT>';
 
@@ -129,13 +126,13 @@ class users
                     <input type="hidden" name="form_id" value="form_register">
                     <input type="hidden" name="op" value="4"/>
                 <fieldset class="line-form">
-                 <input type="text" maxlenght="50" name="firstname" placeholder= "nom prenom" class="rounded-input"  value="{$previousData['firstname']}"/>
-                 <input type="text" maxlenght="50" name="lastname" placeholder= "nom nom" class="rounded-input"  value="{$previousData['lastname']}"/>
-                 </fieldset>
+                 <input type="text" maxlenght="50" name="fullname" placeholder= "nom complet" class="rounded-input"  value="{$previousData['fullname']}"/>
+                 <input id="email"  type="email"  name="email" maxlenght="126" size="30" autofocus    value="{$previousData['email']}" placeholder="Email"  class="rounded-input"><br>
+
+                </fieldset>
                 <fieldset class="line-form password">
 
 
-            <input id="email"  type="email"  name="email" maxlenght="126" size="30" autofocus    value="{$previousData['email']}" placeholder="Email"  class="rounded-input"><br>
 
                 <input type="password" id="password" name="password" maxlength="8"  placeholder="mot de passe - max 8 car." size = "30"  value="{$previousData['password_repeated']}" class="rounded-input"><br>
 
@@ -145,29 +142,23 @@ class users
 
         </fieldset>
         <fieldset class="line-form">
-
                     <div>
                         {$selectPays}
                     </div>
-
+                    <br/>
                     <div>
-
                      <label for="info">Je desire recevoir les informations sur les produits
                      </label>
                         <input type="checkbox" name="info" type="info"  checked="checked" id="info"  class="rounded-input" />
                     </div>
-                    <div>
-
-
+                    <br/>
                  <div>
                     {$radioLanguage}
                 </div>
-
-
-             </fieldset>
-             <fieldset class="line-form">
+         </fieldset>
+        <fieldset class="line-form">
              <input button type="submit" value="Soumettre"  class="rounded-input"/><input type="reset"  class="rounded-input" value="Annuler"/>
-             </fieldset>
+        </fieldset>
 
         </form>
     HTML;
@@ -181,18 +172,17 @@ class users
             crash(400, "Mauvais formulaire recu");
         }
         // Supose that it comes from a bd
-        $users = [
-            ['id' => 0, 'email' => 'Yannick@gmail.com', 'pw' => '12345678'],
-            ['id' => 1, 'email' => 'Victor@test.com', 'pw' => '11111111'],
-            ['id' => 2, 'email' => 'Christian@victoire.ca', 'pw' => '22222222'],
-        ];
+        $DB = new db_pdo();
+        $DB->connect();
+
+
         //recuperer les valeurs du formulaire
-        if (users::checkInput("pwd",   126, 8, true) && users::checkInput("email", 126, 0, true)) {
+        if (checkInput("pwd",   126, 8, true) && checkInput("email", 126, 0, true)) {
             $password = htmlspecialchars($_REQUEST['pwd']);
-
             $email = htmlspecialchars($_REQUEST['email']);
-
-            foreach ($users as $user) {
+            $results = $DB->query("Select * from users where email='$email' and pw='$password' ;");
+            $users = $results->fetchAll();
+            /* foreach ($users as $user) {
                 if (($user['email'] === $email) && ($user['pw'] === $password)) {
                     $pageData = DEFAULT_PAGE_DATA;
                     $pageData['title'] = "Welcome!";
@@ -202,6 +192,16 @@ class users
                     webpage::render($pageData);
                     return;
                 }
+            }*/
+
+            if (count($users) == 1) {
+                $pageData = DEFAULT_PAGE_DATA;
+                $pageData['title'] = "Welcome!";
+                $pageData['content'] = "Vous etes connecte";
+                $_SESSION["email"] = $email;
+
+                webpage::render($pageData);
+                return;
             }
 
             if (isset($_SESSION['tentatives'])) {
@@ -237,132 +237,44 @@ class users
     public static function registerVerify($msg = "", $previousData = [])
     {
 
-
         if (!isset($_REQUEST['form_id']) || $_REQUEST['form_id'] != "form_register") {
             crash(400, "Mauvais formulaire recu");
         }
-
-
-
-
-        $previousData = users::checkInputText("lastname", $previousData);
-        $previousData = users::checkInputText("password", $previousData);
-        $previousData = users::checkInputText("password_repeated", $previousData);
-        $previousData = users::checkInputText("firstname", $previousData);
-        $previousData = users::checkInputText("email", $previousData);
-
-
-
-        if (isset($_POST['info']) && $_POST['info'] != '')
-            $previousData['info'] = $_POST['info'];
-
-        else
-            users::$errors .= "Champ manquant : les condition d'utilisation  <br/>";
-
-
-        if (isset($_POST["password"]) && isset($_POST["password_repeated"]) && ($_POST["password"] !== $_POST["password_repeated"])) {
-            users::$errors .= " Le mot de passe et sa verification ne sont pas equivalents <br/>";
+        if (($_REQUEST["password"] != $_REQUEST["password_repeated"])) {
+            $msg .= " Le mot de passe et sa verification ne concordent pas! <br/>";
         }
 
+        /*
+        Monsieur, j'aurai aime affichier les messages d'erreur de la page de register en meme temps que le formulaire contenant les donnees memomrisees
+        C'est pourquoi j'ai reecrit la fonction check Input. */
 
-        //recuperer les valeurs du formulaire
         if (
-            users::checkInput("password",   126, 8, true) &&
-            users::checkInput("password_repeated", 126, 0, true)  &&
-            users::checkInput("firstname",   40, 8, true) &&
-            users::checkInput("lastname", 40, 0, true)  &&
-            users::checkInput("email", 40, 0, true)
+            ($fullname = checkInput("fullname", 50, true, $msg)) &&
+            ($email = checkInput("email",  126, true, $msg)) &&
+            ($password = checkInput("password", 8, true, $msg)) &&
+            ($password_repeated = checkInput("password_repeated",  8, true, $msg)) &&
+            ($country = checkInput("country", 2, 2, true, $msg)) &&
+            ($language = checkInput("language", 25, true, $msg))
+
         ) {
-            $password = htmlspecialchars($_REQUEST['password']);
 
-            //Verifion si l'email n'est pas deja utilise
-            $users = [
-                ['id' => 0, 'email' => 'Yannick@gmail.com', 'pw' => '12345678'],
-                ['id' => 1, 'email' => 'Victor@test.com', 'pw' => '11111111'],
-                ['id' => 2, 'email' => 'Christian@victoire.ca', 'pw' => '22222222'],
-            ];
-            foreach ($users as $user) {
-                if ($_POST['email'] == $user['email']) {
-                    users::$errors .= "Cet email est deja pris </br>";
-                    break;
-                }
+            $DB = new db_pdo();
+            $DB->connect();
+
+            $results = $DB->query("Select * from users where email='$email';");
+            $users = $results->fetchAll();
+            if (count($users) == 1)
+                $msg .= "Cet email est deja pris </br>";
+            if (strlen($msg) == 0) {
+                users::login("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
+            } else {
+                users::register($msg, $_REQUEST);
             }
-
-
-            users::register(users::$errors, $previousData);
         } else {
-            //crash(400, "Erreur dans users.php loginVerify(), email non recu oi trop long , max 126 caracteres");
-            users::register(users::$errors);
+
+            users::register($msg, $previousData);
         }
-    }
-
-
-
-    private static function checkInputText($name, $previousData)
-    {
-        if (strlen($_POST[$name]) != 0)
-
-
-
-            $previousData[$name] = $_POST[$name];
-        else {
-            switch ($name) {
-                case "email":
-                    users::$errors .= "Veuillez indiquer votre adresse email !<br/>";
-                    break;
-                case "firstname":
-                    users::$errors .= "Veuiller indiquer votre nom complet ! <br/>";
-                    break;
-                case "pw1":
-                    users::$errors .= "Veuiller indiquer votre mot de passe de verificagtion !<br/>";
-                    break;
-                case "pw":
-                    users::$errors .= "Veuiller indiquer votre mot de passe !<br/>";
-                    break;
-            }
-            $previousData[$name] = "";
-        }
-
-
-
-
-        return $previousData;
-    }
-
-
-    /**
-     * $name : The name of the input
-     * $maxLength : the max lenght of the input if it exists
-     * $minLength : the max lenght of the input if it exists
-     * $required : specifies if the input is requered
-     */
-    //  ecrire une fonction de verification
-    public static function checkInput($name,  $maxLength = 0, $required)
-    {
-
-
-        if (!isset($_REQUEST[$name])) {
-
-            users::$errors .= $name . " is required <br/>";
-            crash(400,  users::$errors);
-        } else {
-            $input = trim($_REQUEST[$name]);
-            if ($required && ($input === '')) {
-                users::$errors .= $name . " is required<br/>";
-                crash(400,  users::$errors);
-            }
-            if (($maxLength != 0) && (strlen($input) > $maxLength)) {
-                users::$errors  .= $name . " must have at must " . $maxLength . "characters<br/>";
-                crash(400,    users::$errors);
-            }
-
-            $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";
-            if ($name === "email" && !preg_match($pattern, $input)) {
-                users::$errors .= $input . "is an  invalid Email\n";
-                crash(400,    users::$errors);
-            }
-        }
-
-        return htmlspecialchars($input);
     }
 }
+
+// CLIENT(default), EMPLOYEE,  ADMIN

@@ -25,7 +25,6 @@ class db_pdo
         try {
             $DSN = self::DB_SERVER_TYPE . ':host=' . self::DB_HOST . ';port=' . self::DB_PORT . ';dbname=' . self::DB_NAME . ';charset=' . self::DB_CHARSET;
             $this->DB_Connection = new PDO($DSN, self::DB_USER_NAME, self::DB_PASSWORD, self::DB_OPTIONS);
-            echo "connected to db";
         } catch (PDOException $e) {
             http_response_code(500);
             exit('DB connection Error : ' . $e->getMessage());
@@ -39,11 +38,38 @@ class db_pdo
         }
     }
 
+    /**
+     * For insert, update, delete and other which do not return a table of data
+     */
     public function query($sql)
     {
         try {
             $result = $this->DB_Connection->query($sql);
             return $result;
+        } catch (PDOException $e) {
+            http_response_code(500);
+            exit('DB connection Error : ' . $e->getMessage());
+        }
+    }
+
+    // For a select request, returns a result's table
+    public function querySelect($sql)
+    {
+        try {
+            $result = $this->DB_Connection->query($sql);
+            return $result->fetchAll();
+        } catch (PDOException $e) {
+            http_response_code(500);
+            exit('DB connection Error : ' . $e->getMessage());
+        }
+    }
+
+    // Returns aull the recordings of a table
+    public function table($name)
+    {
+        try {
+            $result = $this->DB_Connection->query("Select * From " . $name . ";");
+            return $result->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             http_response_code(500);
             exit('DB connection Error : ' . $e->getMessage());

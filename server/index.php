@@ -60,7 +60,7 @@ function main()
         case 3:
             // SIGN UP
 
-            users::register();
+            users::register("", $_REQUEST);
             break;
         case 4:
             // VERIFICATION
