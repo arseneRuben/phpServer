@@ -86,12 +86,15 @@ function main()
             download($pageData["manual"]);
             break;
         case 400:
-            $pageData['title'] = COMPANY_NAME . "-Customers list";
-            if (isset($_REQUEST['search_id']))
-                customers::list(intval($_REQUEST['search_id']));
-            else
-                customers::list();
-
+            if (isset($_SESSION['email'])) {
+                $pageData['title'] = COMPANY_NAME . "-Customers list";
+                if (isset($_REQUEST['search_id']))
+                    customers::list(intval($_REQUEST['search_id']));
+                else
+                    customers::list();
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
             break;
         case 51:
             redirect("https://www.facebook.com/Rubenpkfokam");
