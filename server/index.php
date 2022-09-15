@@ -88,6 +88,8 @@ function main()
         case 400:
             if (isset($_SESSION['email'])) {
                 $pageData['title'] = COMPANY_NAME . "-Customers list";
+
+
                 if (isset($_REQUEST['search_id']))
                     customers::list(intval($_REQUEST['search_id']));
                 else

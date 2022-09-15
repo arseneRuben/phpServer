@@ -10,7 +10,7 @@ class customers
         if ($search_id == 0) {
             $clients = $DB->querySelect("SELECT id, name, country FROM customers");
         } else {
-            $clients = $DB->querySelect("SELECT id, name, country FROM customers WHERE id=$search_id");
+            $clients = $DB->querySelectParams("SELECT id, name, country FROM customers WHERE id=?", [$search_id]);
         }
         $number = count($clients);
         $tbHtml = tableToHtml($clients);

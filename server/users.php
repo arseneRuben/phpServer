@@ -268,8 +268,17 @@ class users
             if (count($users) == 1)
                 $msg .= "Cet email est deja pris </br>";
             if (strlen($msg) == 0) {
-                if ($DB->query("INSERT INTO users(email, fullname,    pw, country, language, spam_ok) VALUES
-                                                ('$email','$fullname', '$password','$country', '$language', '$spam_ok')"))
+                $params = [
+                    'fullname' => $fullname,
+                    'email' => $email,
+                    'pw' => $password,
+                    'country' => $country,
+                    'language' => $language,
+                    'spam_ok' => $spam_ok
+                ];
+
+                if ($DB->queryParams("INSERT INTO users(email, fullname,    pw, country, language, spam_ok) VALUES
+                                                (:email, :fullname, :pw, :country, :language, :spam_ok)", $params))
                     users::login("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
             } else {
                 users::register($msg, $_REQUEST);

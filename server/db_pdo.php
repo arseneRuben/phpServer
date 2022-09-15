@@ -52,6 +52,24 @@ class db_pdo
         }
     }
 
+
+
+    /**
+     * For insert, update, delete and other which do not return a table of data
+     */
+    public function queryParams($sql, $params)
+    {
+        try {
+            $stmt = $this->DB_Connection->prepare($sql);
+            return  $stmt->execute($params);
+            // $result = $this->DB_Connection->query($sql);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            exit('DB connection Error : ' . $e->getMessage());
+        }
+    }
+
+
     // For a select request, returns a result's table
     public function querySelect($sql)
     {
@@ -63,6 +81,21 @@ class db_pdo
             exit('DB connection Error : ' . $e->getMessage());
         }
     }
+
+    // For a select request, returns a result's table
+    public function querySelectParams($sql, $params)
+    {
+        try {
+            $stmt = $this->DB_Connection->prepare($sql);
+            $stmt->execute($params);
+            // $result = $this->DB_Connection->query($sql);
+            return $stmt->fetchAll(); // returns the array of data
+        } catch (PDOException $e) {
+            http_response_code(500);
+            exit('DB connection Error : ' . $e->getMessage());
+        }
+    }
+
 
     // Returns aull the recordings of a table
     public function table($name)
