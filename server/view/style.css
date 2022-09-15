@@ -47,11 +47,17 @@ form.form {
 }
 
 input {
+    border: 0;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+    margin: auto;
+}
+
+form.form input {
     padding: 10px;
     border: 0;
     box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
-    width: 70%;
-    margin: auto;
+    width: 50%;
+
 
 }
 
@@ -62,7 +68,7 @@ img.logo {
     border-radius: 10px;
 }
 
-button {
+form.form button {
 
     /* remove default behavior */
     appearance: none;
@@ -75,7 +81,7 @@ button {
     color: #fff;
     font-weight: 600;
     border-radius: 5px;
-    width: 100%;
+    width: 40%;
 
 }
 
@@ -87,4 +93,8 @@ footer div {
     display: inline;
     padding-left: 10%;
     text-align: center;
+}
+
+td:nth-child(even) {
+    background-color: #D6EEEE;
 }

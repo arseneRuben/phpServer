@@ -75,3 +75,26 @@ function checkInput($name,  $maxLength = 0, $minLength = 1000, $required, $error
 
     return htmlspecialchars($input);
 }
+
+function  tableToHtml($table)
+{
+    if ($table === []) {
+        $html = "tableau vide";
+    } else {
+        $html = "<table><thead>";
+        foreach (array_keys($table[0]) as $key) {
+            $html .= "<th>" . $key . "</th>";
+        }
+        $html .=  "</thead><tbody>";
+        foreach ($table as $produit) {
+            $html .= "<tr>";
+            foreach (array_keys($table[0]) as $key) {
+                $html .= "<td>" . $produit[$key] . "</td>";
+            }
+            $html .= "</tr>";
+        }
+
+        $html .=  "</tbody></table>";
+    }
+    return $html;
+}

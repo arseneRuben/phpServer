@@ -13,6 +13,7 @@ require_once "globals.php";
 require_once "tools.php";
 require_once "view/webpage.php";
 require_once "users.php";
+require_once "view/customers.php";
 
 function main()
 {
@@ -83,6 +84,14 @@ function main()
             break;
         case 50:
             download($pageData["manual"]);
+            break;
+        case 400:
+            $pageData['title'] = COMPANY_NAME . "-Customers list";
+            if (isset($_REQUEST['search_id']))
+                customers::list(intval($_REQUEST['search_id']));
+            else
+                customers::list();
+
             break;
         case 51:
             redirect("https://www.facebook.com/Rubenpkfokam");

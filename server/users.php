@@ -137,9 +137,6 @@ class users
                 <input type="password" id="password" name="password" maxlength="8"  placeholder="mot de passe - max 8 car." size = "30"  value="{$previousData['password_repeated']}" class="rounded-input"><br>
 
             <input  type="password" id="password_repeated" name="password_repeated" maxlength="8"  placeholder="repetez le mot de passe" size="30"  value="{$previousData['password_repeated']}" class="rounded-input"><br>
-
-
-
         </fieldset>
         <fieldset class="line-form">
                     <div>
@@ -149,7 +146,7 @@ class users
                     <div>
                      <label for="info">Je desire recevoir les informations sur les produits
                      </label>
-                        <input type="checkbox" name="info" type="info"  checked="checked" id="info"  class="rounded-input" />
+                        <input type="checkbox" name="spam_ok"  checked="checked" id="info"  class="rounded-input" />
                     </div>
                     <br/>
                  <div>
@@ -263,11 +260,16 @@ class users
 
             $results = $DB->query("Select * from users where email='$email';");
             $users = $results->fetchAll();
+            if ($_REQUEST["spam_ok"]) {
+                $spam_ok = 1;
+            } else {
+                $spam_ok = 0;
+            }
             if (count($users) == 1)
                 $msg .= "Cet email est deja pris </br>";
             if (strlen($msg) == 0) {
-                if ($DB->query("INSERT INTO users(email, fullname,    pw, country, language) VALUES
-                                                ('$email','$fullname', '$password','$country', '$language')"))
+                if ($DB->query("INSERT INTO users(email, fullname,    pw, country, language, spam_ok) VALUES
+                                                ('$email','$fullname', '$password','$country', '$language', '$spam_ok')"))
                     users::login("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
             } else {
                 users::register($msg, $_REQUEST);

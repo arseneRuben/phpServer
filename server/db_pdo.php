@@ -75,4 +75,15 @@ class db_pdo
             exit('DB connection Error : ' . $e->getMessage());
         }
     }
+    // Returns aull the recordings of a table
+    public function table2($name)
+    {
+        try {
+            $result = $this->DB_Connection->query("Select * From " . $name . ";");
+            return $result->fetchAll(PDO::FETCH_BOTH);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            exit('DB connection Error : ' . $e->getMessage());
+        }
+    }
 }
