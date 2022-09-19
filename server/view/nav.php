@@ -20,7 +20,7 @@
             echo '<span>Connecte entant que ' . $_SESSION["email"] . '</span>';
             echo '<a href="index.php?op=5">Log out</a>  &#124;';
             echo '<a href="index.php?op=400">Clients</a>&#124;';
-            echo '<a href="index.php?op=100">Produits</a>';
+            echo '<a href="index.php?op=100">Produits</a> <a   href="index.php?op=130" class="btn btn-light"><i class="fa fa-plus-circle" aria-hidden="true"></i></a ></h2>';
         } else {
             echo ' <a href="index.php?op=1">Sign In</a>  &#124;
             <a href="index.php?op=3">Sign Up</a>

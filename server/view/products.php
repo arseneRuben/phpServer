@@ -21,7 +21,7 @@ class products
 
 
         $pageData['content'] .= <<<HTML
-        <h2  class="error"> Product list   <a   href="index.php?op=140" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i></a ></h2>
+        <h2  class="error"> Product list
         <h3>Number of products : $number </h3>
             <form  class="table" action="index.php"  >
             <input type="hidden" name="op" value="100"/>
@@ -587,12 +587,12 @@ class products
                     <div>
                     <a   href="index.php?op=100" class="btn btn-primary"><i class="fa fa-list" aria-hidden="true"></i></i></a >
 
-                    <a   href='index.php?op=130&id={ $product[0]->id }' class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
-                            <a    href="index.php?op=190" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a >
+                    <a   href="index.php?op=130&id={$product[0]->id}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
+                    <a    href="index.php?op=190&id={$product[0]->id}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a >
                     </div>
                 </div>
             </div>
-     HTML;
+        HTML;
         webpage::render($pageData);
     }
 }

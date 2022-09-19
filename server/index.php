@@ -1,5 +1,5 @@
 <?php
-ini_set('session.gc_maxlifetime', 60);
+ini_set('session.gc_maxlifetime', 1600);
 
 // each client should remember their session id for EXACTLY 1 hour
 session_set_cookie_params(60);
@@ -118,6 +118,15 @@ function main()
             /*  } else {
                 crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
             }*/
+            break;
+        case 130:
+            // show product
+            /*  if (isset($_SESSION['email'])) {*/
+            $pageData['title'] = COMPANY_NAME . "-Show product ";
+            products::show($_REQUEST['id']);
+            /*  } else {
+                    crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+                }*/
             break;
         case 400:
             if (isset($_SESSION['email'])) {
