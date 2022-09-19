@@ -94,9 +94,10 @@ function  tableToHtml($table, $href = 0)
                 $html .= "<td>" . $produit[$key] . "</td>";
             }
             $html .= '<td>
-                            <a    href="index.php?op=' . ($href + 20) . '&id=' . ($produit['id']) . '" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a >
+                            <a   href="index.php?op=' . ($href + 40) . '&id=' . ($produit['id']) . '" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a >
                             <a   href="index.php?op=' . ($href + 30)  . '&id=' . ($produit['id']) .  '" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
-                            <a    href="index.php?op=' . ($href + 90)  . '&id=' . ($produit['id']) .  '" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a ></td>';
+                            <a   href="index.php?op=' . ($href + 90)  . '&id=' . ($produit['id']) .  '" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a >
+                     </td>';
             $html .= "</tr>";
         }
 

@@ -111,6 +111,18 @@ function main()
             }
             break;
         case 120:
+            products::listJson();
+            break;
+        case 130:
+            // new product
+            /*  if (isset($_SESSION['email'])) {*/
+            $pageData['title'] = COMPANY_NAME . "-New product ";
+            products::new();
+            /*  } else {
+                        crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+                    }*/
+            break;
+        case 140:
             // show product
             /*  if (isset($_SESSION['email'])) {*/
             $pageData['title'] = COMPANY_NAME . "-Show product ";
@@ -119,15 +131,8 @@ function main()
                 crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
             }*/
             break;
-        case 130:
-            // show product
-            /*  if (isset($_SESSION['email'])) {*/
-            $pageData['title'] = COMPANY_NAME . "-Show product ";
-            products::show($_REQUEST['id']);
-            /*  } else {
-                    crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-                }*/
-            break;
+
+
         case 400:
             if (isset($_SESSION['email'])) {
                 $pageData['title'] = COMPANY_NAME . "-Customer list";

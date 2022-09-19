@@ -16,7 +16,6 @@
      &#124;
      <?php
         if (isset($_SESSION['email'])) {
-
             echo '<span>Connecte entant que ' . $_SESSION["email"] . '</span>';
             echo '<a href="index.php?op=5">Log out</a>  &#124;';
             echo '<a href="index.php?op=400">Clients</a>&#124;';

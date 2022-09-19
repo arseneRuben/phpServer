@@ -132,3 +132,8 @@ form.table, table {
     width: 40%;
     margin: auto;
 }
+
+div.content {
+    width: 50%;
+    text-align: center;
+}
