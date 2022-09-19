@@ -177,8 +177,8 @@ class users
         if (checkInput("pwd",   126, 8, 1, true) && checkInput("email", 126, 0, 1, true)) {
             $password = htmlspecialchars($_REQUEST['pwd']);
             $email = htmlspecialchars($_REQUEST['email']);
-            $results = $DB->query("Select * from users where email='$email' and pw='$password' ;");
-            $users = $results->fetchAll();
+            $users = $DB->querySelect("Select * from users where email='$email'  ;");
+            // $users = $results->fetchAll();
             /* foreach ($users as $user) {
                 if (($user['email'] === $email) && ($user['pw'] === $password)) {
                     $pageData = DEFAULT_PAGE_DATA;
@@ -191,7 +191,8 @@ class users
                 }
             }*/
 
-            if (count($users) == 1) {
+            if ((count($users) === 1) && password_verify($password, $users[0]['pw'])) {
+
                 $pageData = DEFAULT_PAGE_DATA;
                 $pageData['title'] = "Welcome!";
                 $pageData['content'] = "Vous etes connecte";
@@ -271,7 +272,7 @@ class users
                 $params = [
                     'fullname' => $fullname,
                     'email' => $email,
-                    'pw' => $password,
+                    'pw' => password_hash($password, PASSWORD_DEFAULT), // Encodage du mot de passe
                     'country' => $country,
                     'language' => $language,
                     'spam_ok' => $spam_ok

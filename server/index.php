@@ -14,7 +14,7 @@ require_once "tools.php";
 require_once "view/webpage.php";
 require_once "users.php";
 require_once "view/customers.php";
-
+require_once "view/products.php";
 function main()
 {
 
@@ -85,9 +85,43 @@ function main()
         case 50:
             download($pageData["manual"]);
             break;
+        case 51:
+            redirect("https://www.facebook.com/Rubenpkfokam");
+            break;
+        case 100:
+            // Product list
+            if (isset($_SESSION['email'])) {
+                $pageData['title'] = COMPANY_NAME . "-Product list";
+
+                if (isset($_REQUEST['search_id']))
+                    products::list($_REQUEST['search_id']);
+                else
+                    products::list();
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
+            break;
+        case 110:
+            // New product
+            if (isset($_SESSION['email'])) {
+                $pageData['title'] = COMPANY_NAME . "-New Product ";
+                products::new();
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
+            break;
+        case 120:
+            // show product
+            /*  if (isset($_SESSION['email'])) {*/
+            $pageData['title'] = COMPANY_NAME . "-Show product ";
+            products::show($_REQUEST['id']);
+            /*  } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }*/
+            break;
         case 400:
             if (isset($_SESSION['email'])) {
-                $pageData['title'] = COMPANY_NAME . "-Customers list";
+                $pageData['title'] = COMPANY_NAME . "-Customer list";
 
 
                 if (isset($_REQUEST['search_id']))
@@ -98,9 +132,7 @@ function main()
                 crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
             }
             break;
-        case 51:
-            redirect("https://www.facebook.com/Rubenpkfokam");
-            break;
+
         default:
             //http_response_code(404);
             crash(404, "Invalid operation dans index.php");

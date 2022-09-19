@@ -76,21 +76,29 @@ function checkInput($name,  $maxLength = 0, $minLength = 1000, $required, $error
     return htmlspecialchars($input);
 }
 
-function  tableToHtml($table)
+function  tableToHtml($table, $href = 0)
 {
     if ($table === []) {
         $html = "tableau vide";
     } else {
-        $html = "<table><thead>";
+        $html = '<table  class="table"><thead>';
         foreach (array_keys($table[0]) as $key) {
-            $html .= "<th>" . $key . "</th>";
+            $html .= '<th scope="col">' . $key . '</th>';
         }
+        $html .= '<th scope="col">Actions</th>';
         $html .=  "</thead><tbody>";
         foreach ($table as $produit) {
             $html .= "<tr>";
+
             foreach (array_keys($table[0]) as $key) {
                 $html .= "<td>" . $produit[$key] . "</td>";
             }
+            $html .= '<td>
+
+                            <a   href="index.php?op=' . ($href + 50)  . '&id=' . ($produit['id']) .  '" class="btn btn-dark"><i class="fa fa-minus" aria-hidden="true"></i></a >
+                            <a    href="index.php?op=' . ($href + 20) . '&id=' . ($produit['id']) . '" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a >
+                            <a   href="index.php?op=' . ($href + 30)  . '&id=' . ($produit['id']) .  '" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
+                            <a    href="index.php?op=' . ($href + 90)  . '&id=' . ($produit['id']) .  '" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a ></td>';
             $html .= "</tr>";
         }
 
@@ -175,7 +183,7 @@ function Picture_Uploaded_Save_File($file_input, $target_dir)
         return $message;
     }
 }
-
+/*
 function Photo_Uploaded_Mime_Type($file_input)
 {
     // Attention: Utiliser function Photo_Uploaded_Is_Valid() avant !
@@ -196,4 +204,4 @@ function Photo_Uploaded_Mime_Type($file_input)
     }
 
     return 'ERROR';
-}
+}*/

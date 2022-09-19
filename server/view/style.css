@@ -1,3 +1,31 @@
+/** Chargement des polices **/
+@font-face {
+    font-family: "UnicaOne";
+    src: url("../images/Fonts/Unica_One/UnicaOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Caveat";
+    src: url("../images/Fonts/Caveat/Caveat-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../images/Fonts/Poppins/Poppins-Regular.ttf");
+}
+
+/*Police de caractere par defaut pour tout le site, ne pas changer svp*/
+* {
+    font-family: "UnicaOne";
+}
+
+/** Déclaration du box-sizing, ne pas toucher svp **/
+* {
+    box-sizing: border-box;
+}
+
+
+
 header>h2 {
     background-color: blanchedalmond;
     color: white;

@@ -19,8 +19,8 @@
 
             echo '<span>Connecte entant que ' . $_SESSION["email"] . '</span>';
             echo '<a href="index.php?op=5">Log out</a>  &#124;';
-            echo "<a href='index.php?op=400'>Clients</a>
-     &#124;";
+            echo '<a href="index.php?op=400">Clients</a>&#124;';
+            echo '<a href="index.php?op=100">Produits</a>';
         } else {
             echo ' <a href="index.php?op=1">Sign In</a>  &#124;
             <a href="index.php?op=3">Sign Up</a>

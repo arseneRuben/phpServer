@@ -3,11 +3,11 @@ class db_pdo
 {
     const DB_SERVER_TYPE = 'mysql'; // MySQL or MariaDB server
     const DB_HOST = '127.0.0.1'; // local server on my laptop
-    const DB_PORT = 3306; // optional, default 3306, use 3307 for MariaDB
+    const DB_PORT = 3307; // optional, default 3306, use 3307 for MariaDB
     const DB_NAME = 'classicmodels'; // for Database classicmodels
     const DB_CHARSET = 'utf8mb4'; // pour français correct
-    const DB_USER_NAME = 'ruben'; // if not root it must have been previously created on DB server
-    const DB_PASSWORD = 'passwordruben';
+    const DB_USER_NAME = 'root'; // if not root it must have been previously created on DB server
+    const DB_PASSWORD = '';
 
     // PDO connection options
     const DB_OPTIONS = [
@@ -71,11 +71,11 @@ class db_pdo
 
 
     // For a select request, returns a result's table
-    public function querySelect($sql)
+    public function querySelect($sql, $option = PDO::FETCH_ASSOC)
     {
         try {
             $result = $this->DB_Connection->query($sql);
-            return $result->fetchAll();
+            return $result->fetchAll($option);
         } catch (PDOException $e) {
             http_response_code(500);
             exit('DB connection Error : ' . $e->getMessage());
