@@ -32,4 +32,20 @@ class customers
         webpage::render($pageData);
         return;
     }
+
+    /**
+     * Send to the client the JSON's format of the list of products
+     */
+    public static function listJson()
+    {
+
+        $DB = new db_pdo();
+        $DB->connect();
+
+        $customers = $DB->table("customers");
+        $customerJson = json_encode($customers, JSON_PRETTY_PRINT);
+        header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(200); // ou autre au besoin
+        echo $customerJson;
+    }
 }

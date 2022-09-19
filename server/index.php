@@ -146,6 +146,9 @@ function main()
                 crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
             }
             break;
+        case 420:
+            products::listJson();
+            break;
 
         default:
             //http_response_code(404);

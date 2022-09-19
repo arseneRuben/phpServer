@@ -134,6 +134,8 @@ form.table, table {
 }
 
 div.content {
+
     width: 50%;
     text-align: center;
+    margin: auto;
 }
