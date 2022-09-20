@@ -36,19 +36,59 @@ class products
      * print new product creation form
      */
 
-    public static function new($msg = "", $previousData = [])
+    public static function new($msg = "", $previousData = [], $classAlert = "warning")
     {
+
         if ($previousData === []) {
-            $previousData = [
-                'email' => '',
-                'pwd' => ''
-            ];
+            // Update Mode
+            if (isset($_REQUEST['id'])) {
+                $id = $_REQUEST['id'];
+                $DB = new db_pdo();
+                $DB->connect();
+                $product = $DB->querySelect("Select * from products where id='$id'  ;", PDO::FETCH_OBJ);
+                $previousData = [
+                    'id' => $id,
+                    'name' => $product[0]->name,
+                    'scale' => $product[0]->scale,
+                    'stock' => $product[0]->quantityInStock,
+                    'cost' => $product[0]->cost,
+                    'retailPrice' => $product[0]->retailPrice,
+                    'vendor' => $product[0]->vendor,
+                    'description' => $product[0]->description
+                ];
+                //Help to check if it-is CREATION or UPDATE
+                $form_id = "product_edition";
+                $button = <<<HTML
+                <button type="submit" class="btn btn-warning">Update product</button>
+                HTML;
+            } else {
+                // Creation Mode
+                $previousData = [
+                    'id' => '',
+                    'name' => '',
+                    'scale' => '',
+                    'stock' => '',
+                    'cost' => '',
+                    'retailPrice' => '',
+                    'description' => '',
+                    'vendor' => ''
+                ];
+                //Help to check if it-is CREATION or UPDATE
+                $form_id = "product_creation";
+                $button = <<<HTML
+                <button type="submit" class="btn btn-primary">Create product</button>
+                HTML;
+            }
         }
+
+        // Create or update
+
+        // Select
         $DB = new db_pdo();
         $DB->connect();
         $categories = $DB->table("productcategories");
 
-        $selectCategories = '<SELECT name="categorie" class="form-select form-control">';
+        $selectCategories = '<SELECT name="category"   class="form-select form-control">';
         $selectCategories .= '<option value="" selected> Affecter une categorie </option>';
         foreach ($categories as $p) {
             $selectCategories .= '<option value="' . $p->name . '" >' . $p->name . '</option>';
@@ -59,15 +99,24 @@ class products
         $pageData['title'] = COMPANY_NAME . "-New product";
         $pageData['content'] = <<<HTML
          <div class="card content">
-            <h2  class="error"> {$msg} </h2>
+            <div class="alert alert-{$classAlert} d-none">Nouveau formulaire</div>
+            <form class="needs-validation" action="index.php" method="POST" id="{$form_id}" novalidate>
 
-            <form class="needs-validation"action="index.php" method="POST"  novalidate>
-                <div class="alert alert-danger d-none">Please review the problems below:</div>
+
+                <input type="hidden" name="form_id" value="{$form_id}">
+                    <input type="hidden" name="op" value="104"/>
+                <fieldset  class="line-form">
+                <div class="row mb-3">
+                    <label for="id" class="col-sm-3 col-form-label">Identifiant</label>
+                    <div class="col-sm-9">
+                    <input type="text" class="form-control" id="id"  name="id" placeholder="Identifiant" autofocus    value="{$previousData['id']}"  required>
+                    </div>
+                </div>
 
                 <div class="row mb-3">
-                    <label for="exampleInputName" class="col-sm-3 col-form-label">Name</label>
+                    <label for="name" class="col-sm-3 col-form-label">Commercial name</label>
                     <div class="col-sm-9">
-                    <input type="text" class="form-control" id="exampleInputName" placeholder="Your name" required>
+                    <input type="text" class="form-control" id="name"  name="name" placeholder="Comercial name" autofocus    value="{$previousData['name']}"  required>
                     </div>
                 </div>
 
@@ -77,271 +126,54 @@ class products
                     <div class="d-flex flex-row justify-content-between align-items-center">
                        {$selectCategories}
                     </div>
-
-                    </div>
                 </div>
+                </fieldset>
                 <div class="row mb-3">
-                    <label for="exampleInputPassword" class="col-sm-3 col-form-label">Scale</label>
+                    <label for="scale" class="col-sm-3 col-form-label">Scale</label>
                     <div class="col-sm-9">
-                    <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" autocomplete="current-password" required>
+                    <input type="text" class="form-control"  name="scale" id="scale" placeholder="Scale"  value="{$previousData['scale']}" required>
 
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label for="exampleCustomFile" class="col-sm-3 col-form-label">Vendor</label>
+                    <label for="vendor" class="col-sm-3 col-form-label">Vendor</label>
                     <div class="col-sm-9">
-                    <input type="file" class="form-control" id="exampleCustomFile" required>
+                    <input type="text" class="form-control" id="vendor" placeholder="Vendor" name="vendor"    value="{$previousData['vendor']}" >
 
                     </div>
                 </div>
-
                 <div class="row mb-3">
-                    <label for="exampleTextareaBio" class="col-sm-3 col-form-label">Description</label>
+                    <label for="stock" class="col-sm-3 col-form-label">Stock</label>
                     <div class="col-sm-9">
-                    <textarea class="form-control" id="exampleTextareaBio" rows="2" placeholder="Tell us your story" required></textarea>
-                    <div class="invalid-feedback">Please provide a valid value.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="form-text">Textarea input example</div>
+                    <input type="number"  min="0" class="form-control" value="{$previousData['stock']}" name="stock" id="stock" placeholder="Quantity in stock" required>
+
                     </div>
                 </div>
-
-
-
-
-
-
-                 <!--
-
                 <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label pt-0">Choises</label>
+                    <label for="stock" class="col-sm-3 col-form-label">Cost</label>
                     <div class="col-sm-9">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="exampleCheckbox1" value="option1" required>
-                        <label class="form-check-label" for="exampleCheckbox1">Learn the Ruby programming language</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="exampleCheckbox2" value="option1" required>
-                        <label class="form-check-label" for="exampleCheckbox2">Create a Ruby on Rails application</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="exampleCheckbox3" value="option1" required>
-                        <label class="form-check-label" for="exampleCheckbox3">Practice Ruby, Rails, Tests and Simple Form</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="exampleCheckbox4" value="option1" required>
-                        <label class="form-check-label" for="exampleCheckbox4">Deploy your application in the cloud</label>
-                    </div>
-                    <div class="invalid-feedback">Please provide a valid value.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="form-text">Collection as check boxes example</div>
+                    <input type="number"  min="0" class="form-control" value="{$previousData['cost']}" step="0.01"  name="cost" id="cost" placeholder="Cost" required>
+
                     </div>
                 </div>
-
                 <div class="row mb-3">
-                    <label for="exampleInputFriends" class="col-sm-3 col-form-label">Friends</label>
+                    <label for="stock" class="col-sm-3 col-form-label">Retail price</label>
                     <div class="col-sm-9">
-                    <input type="number" class="form-control" id="exampleInputFriends" placeholder="Number of Friends" required>
-                    <div class="invalid-feedback">Please provide a valid value.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="form-text">Integer input example</div>
+                    <input type="number"  min="0" class="form-control" value="{$previousData['retailPrice']}"  name="retailPrice" id="stock" placeholder="RetailPrice" required>
+
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label for="exampleRangeMood" class="col-sm-3 col-form-label pt-0">Mood</label>
+                    <label for="description" class="col-sm-3 col-form-label">Description</label>
                     <div class="col-sm-9">
-                    <input type="range" class="form-range" id="exampleRangeMood" required>
-                    <div class="invalid-feedback">Please provide a valid value.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="form-text">Integer range example</div>
+                    <input type="text"  class="form-control" id="description" rows="2"  name="description"  value="{$previousData['description']}"  placeholder="Short description of the product" />
                     </div>
                 </div>
-
-                <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">Awake</label>
-                    <div class="col-sm-9">
-                    <div class="d-flex flex-row justify-content-between align-items-center">
-                        <select id="exampleInputTimeHour" class="form-select me-1" required>
-                        <option></option>
-                        <option value="00">00</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        </select>
-                        :
-                        <select id="exampleInputTimeMinute" class="form-select ms-1" required>
-                        <option></option>
-                        <option value="00">00</option>
-                        <option value="30">30</option>
-                        </select>
-                    </div>
-                    <div class="invalid-feedback">Please provide a valid value.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="form-text">Time multi select example</div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">First kiss</label>
-                    <div class="col-sm-9">
-                    <div class="d-flex flex-row justify-content-between align-items-center">
-                        <select id="exampleInputDatetimeYear" class="form-select me-1" required>
-                        <option></option>
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        </select>
-
-                        <select id="exampleInputDatetimeMonth" class="form-select mx-1" required>
-                        <option></option>
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">July</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                        </select>
-
-                        <select id="exampleInputDatetimeDay" class="form-select mx-1" required>
-                        <option></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                        <option value="29">29</option>
-                        <option value="30">30</option>
-                        <option value="31">31</option>
-                        </select>
-                        —
-                        <select id="exampleInputDatetimeHour" class="form-select mx-1" required>
-                        <option></option>
-                        <option value="00">00</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        </select>
-                        :
-                        <select id="exampleInputDatetimeMinute" class="form-select ms-1" required>
-                        <option></option>
-                        <option value="00">00</option>
-                        <option value="30">30</option>
-                        </select>
-                    </div>
-                    <div class="form-text">Datetime multi select example</div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label pt-0">Active</label>
-                    <div class="col-sm-9">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleBooleanRadio" id="exampleBooleanRadioYes" value="red" required>
-                        <label class="form-check-label" for="exampleBooleanRadioYes">Yes</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleBooleanRadio" id="exampleBooleanRadioNo" value="red" required>
-                        <label class="form-check-label" for="exampleBooleanRadioNo">No</label>
-                    </div>
-                    <div class="invalid-feedback">Terms must be accepted</div>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="form-text">Boolean as radio button example</div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-sm-9 offset-sm-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="exampleCheckTerms" required>
-                        <label class="form-check-label" for="exampleCheckTerms">Terms</label>
-                        <div class="invalid-feedback">Terms must be accepted</div>
-                        <div class="valid-feedback">Looks good!</div>
-                        <div class="form-text">Boolean as check box example</div>
-                    </div>
-                    </div>
-                </div>
-                -->
                 <div class="row mb-0">
                     <div class="col-sm-9 offset-sm-3">
-                    <button type="submit" class="btn btn-primary">Create User!</button>
+                    {$button}
                     <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
                 </div>
@@ -357,11 +189,9 @@ class products
 
     public static function show($id)
     {
-
         $DB = new db_pdo();
         $DB->connect();
         $product = $DB->querySelect("Select * from products where id='$id'  ;", PDO::FETCH_OBJ);
-
         $pageData = DEFAULT_PAGE_DATA;
         $pageData['title'] = COMPANY_NAME . "-Show product";
         $pageData['content'] = <<<HTML
@@ -370,13 +200,12 @@ class products
             <div class="card content" >
                 <img src="images/product.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">Stock:{$product[0]->quantityInStock}</h5>
                     <p class="card-text">{$product[0]->description}</p>
                     <div>
                     <a   href="index.php?op=100" class="btn btn-primary"><i class="fa fa-list" aria-hidden="true"></i></i></a >
-
                     <a   href="index.php?op=130&id={$product[0]->id}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
-                    <a    href="index.php?op=190&id={$product[0]->id}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a >
+                    <a   href="index.php?op=190&id={$product[0]->id}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a >
                     </div>
                 </div>
             </div>
@@ -398,5 +227,57 @@ class products
         header("Content-Type: application/json; charset=UTF-8");
         http_response_code(200); // ou autre au besoin
         echo $productJson;
+    }
+
+    /**
+     * Verify register form and submit
+     */
+
+    public static function creationVerify($msg = "", $previousData = [])
+    {
+
+        if (!isset($_REQUEST['form_id']) || $_REQUEST['form_id'] != "product_creation") {
+            crash(400, "Mauvais formulaire recu");
+        }
+
+        if (
+            ($id = checkInput("id", 50, 0, true, $msg)) &&
+            ($name = checkInput("name", 50, 0, true, $msg)) &&
+            ($description = checkInput("description",  1300, 0, true, $msg)) &&
+            ($vendor = checkInput("vendor", 140, 0, true, $msg)) &&
+            ($scale = checkInput("scale", 140, 0, true, $msg))
+        ) {
+
+            $DB = new db_pdo();
+            $DB->connect();
+            $products = $DB->querySelect("Select * from products where id='$id'  ;");
+            $products = $products->fetchAll();
+            if (count($products) > 0) {
+                $msg .= "Cet identifiant est deja pris </br>";
+            }
+            if (strlen($msg) == 0) {
+                $params = [
+                    'id' => $id,
+                    'name' => $name,
+                    'description' => $description,
+                    'retailPrice' => floatval($_REQUEST['retailPrice']),
+                    'vendor' => $vendor,
+                    'category' => $_REQUEST['category'],
+                    'scale' => $scale,
+                    'stock' => intval($_REQUEST['stock']),
+                    'cost' => floatval($_REQUEST['cost'])
+                ];
+                if ($DB->queryParams("INSERT INTO products(id, name,    category, scale, vendor, description, quantityInStock, cost, retailPrice) VALUES
+                (:id, :name, :category, :scale, :vendor, :description, :quantityInStock, :cost, :retailPrice)", $params))
+                    //  products::list("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
+                    products::show($id);
+            } else {
+            }
+        } else {
+            // users::register($msg, $_REQUEST);
+        }
+
+
+        users::register($msg, $previousData);
     }
 }

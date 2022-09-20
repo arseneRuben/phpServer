@@ -11,6 +11,7 @@ define('COMPANY_PHONE_NUMBER', '+145876598568');
 define('LOG_FILE', 'homeviews.txt');
 define('MAX_LOGIN_ATEMPT', 3);
 define('VISITOR_LOG_FILE', 'visitors.log');
+define('USER_IMAGE_FOLDER', 'users_images/');
 
 
 

@@ -101,15 +101,22 @@ function main()
                 crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
             }
             break;
-        case 110:
-            // New product
-            if (isset($_SESSION['email'])) {
-                $pageData['title'] = COMPANY_NAME . "-New Product ";
-                products::new();
-            } else {
-                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-            }
+        case 104:
+            // VERIFICATION
+
+            products::creationVerify();
             break;
+        case 110:
+            // Show product
+            /*  if (isset($_SESSION['email'])) {*/
+            $pageData['title'] = COMPANY_NAME . "-Show product ";
+            products::show($_REQUEST['id']);
+            /*  } else {
+                    crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+                }*/
+            break;
+
+
         case 120:
             products::listJson();
             break;
@@ -123,15 +130,14 @@ function main()
                     }*/
             break;
         case 140:
-            // show product
-            /*  if (isset($_SESSION['email'])) {*/
-            $pageData['title'] = COMPANY_NAME . "-Show product ";
-            products::show($_REQUEST['id']);
-            /*  } else {
+            // Edit product
+            if (isset($_SESSION['email'])) {
+                $pageData['title'] = COMPANY_NAME . "-Edit Product ";
+                products::new();
+            } else {
                 crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-            }*/
+            }
             break;
-
 
         case 400:
             if (isset($_SESSION['email'])) {

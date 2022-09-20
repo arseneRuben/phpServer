@@ -16,7 +16,7 @@
      &#124;
      <?php
         if (isset($_SESSION['email'])) {
-            echo '<span>Connecte entant que ' . $_SESSION["email"] . '</span>';
+            echo '<span>Connecte entant que </span> <img class="logo" src="' . USER_IMAGE_FOLDER . $_SESSION["picture"] . '" alt="' . $_SESSION["email"] . '">';
             echo '<a href="index.php?op=5">Log out</a>  &#124;';
             echo '<a href="index.php?op=400">Clients</a>&#124;';
             echo '<a href="index.php?op=100">Produits</a> <a   href="index.php?op=130" class="btn btn-light"><i class="fa fa-plus-circle" aria-hidden="true"></i></a ></h2>';
@@ -25,19 +25,6 @@
             <a href="index.php?op=3">Sign Up</a>
        ';
         }
-
-        // last visit
-        if (isset($_COOKIE['lastVisit'])) {
-            $visite = $_COOKIE['lastVisit'];
-            echo "<span>Dernière visite: " . $visite . "</span>";
-        } else {
-            echo "<span> Bienvenue, c'est votre première visite</span>";
-        }
-        $inFiveYears = 60 * 60 * 24 * 365 * 5 + time();
-        setcookie('lastVisit', date("G:i - d/m/y"), $inFiveYears);
-
-
-
         ?>
 
  </nav>

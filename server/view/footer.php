@@ -9,6 +9,19 @@
                 echo $pageData['compteVues'] . " Visiteur(s)";
 
                 ?> </p>
+            <p>
+                <?php
+                // last visit
+                if (isset($_COOKIE['lastVisit'])) {
+                    $visite = $_COOKIE['lastVisit'];
+                    echo "<span>Dernière visite: " . $visite . "</span>";
+                } else {
+                    echo "<span> Bienvenue, c'est votre première visite</span>";
+                }
+                $inFiveYears = 60 * 60 * 24 * 365 * 5 + time();
+                setcookie('lastVisit', date("G:i - d/m/y"), $inFiveYears);
+                ?>
+            </p>
         </div>
 </footer>
 </div>

@@ -17,6 +17,7 @@ class users
     public static function logout()
     {
         $_SESSION['email'] = null;
+        $_SESSION['picture'] = null;
         header("location:index.php");
     }
     /**
@@ -122,7 +123,7 @@ class users
         $pageData['title'] = COMPANY_NAME . "-Sign in";
         $pageData['content'] = <<<HTML
             <h2  class="error"> {$msg} </h2>
-                <form   class="form"  action="index.php" class="register" method="POST" id="form_register">
+                <form   class="form"  action="index.php" class="register" method="POST" id="form_register" enctype="multipart/form-data">
                     <input type="hidden" name="form_id" value="form_register">
                     <input type="hidden" name="op" value="4"/>
                 <fieldset class="line-form">
@@ -153,6 +154,14 @@ class users
                     {$radioLanguage}
                 </div>
          </fieldset>
+         <fieldset class="line-form">
+         <div>
+         <label for="avatar">Image de profil
+                     </label>
+                 <input id="avatar"  type="file"  name="avatar"  placeholder="Ma photo de profil"  class="rounded-input"><br>
+         </div>
+         </fieldset>
+
         <fieldset class="line-form">
              <input button type="submit" value="Soumettre"  class="rounded-input"/><input type="reset"  class="rounded-input" value="Annuler"/>
         </fieldset>
@@ -197,6 +206,7 @@ class users
                 $pageData['title'] = "Welcome!";
                 $pageData['content'] = "Vous etes connecte";
                 $_SESSION["email"] = $email;
+                $_SESSION["picture"] = $users[0]["picture"];
 
                 webpage::render($pageData);
                 return;
@@ -229,7 +239,7 @@ class users
     }
 
     /**
-     * print login form
+     * Verify register form and submit
      */
 
     public static function registerVerify($msg = "", $previousData = [])
@@ -266,7 +276,7 @@ class users
             } else {
                 $spam_ok = 0;
             }
-            if (count($users) == 1)
+            if (count($users) >= 1)
                 $msg .= "Cet email est deja pris </br>";
             if (strlen($msg) == 0) {
                 $params = [
@@ -275,11 +285,16 @@ class users
                     'pw' => password_hash($password, PASSWORD_DEFAULT), // Encodage du mot de passe
                     'country' => $country,
                     'language' => $language,
-                    'spam_ok' => $spam_ok
+                    'spam_ok' => $spam_ok,
+                    'picture' => basename($_FILES["avatar"]['name'])
                 ];
+                //Upload de l'avatar
+                Picture_Uploaded_Save_File("avatar", "users_images/");
+                if ($msg != "ok") {
+                }
 
-                if ($DB->queryParams("INSERT INTO users(email, fullname,    pw, country, language, spam_ok) VALUES
-                                                (:email, :fullname, :pw, :country, :language, :spam_ok)", $params))
+                if ($DB->queryParams("INSERT INTO users(email, fullname,    pw, country, language, spam_ok, picture) VALUES
+                                                (:email, :fullname, :pw, :country, :language, :spam_ok, :picture)", $params))
                     users::login("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
             } else {
                 users::register($msg, $_REQUEST);
