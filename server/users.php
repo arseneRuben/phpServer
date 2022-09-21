@@ -185,7 +185,7 @@ class users
 
 
         //recuperer les valeurs du formulaire
-        if (checkInput("pwd",   126, 8, 1, true) && checkInput("email", 126, 0, 1, true)) {
+        if (checkInput("pwd",   8, 0, 1, true) && checkInput("email", 126, 0, 1, true)) {
             $password = htmlspecialchars($_REQUEST['pwd']);
             $email = htmlspecialchars($_REQUEST['email']);
             $users = $DB->querySelect("Select * from users where email='$email'  ;");
@@ -259,10 +259,10 @@ class users
         C'est pourquoi j'ai reecrit la fonction check Input. */
 
         if (
-            ($fullname = checkInput("fullname", 50, true, $msg)) &&
-            ($email = checkInput("email",  126, true, $msg)) &&
-            ($password = checkInput("password", 8, true, $msg)) &&
-            ($password_repeated = checkInput("password_repeated",  8, true, $msg)) &&
+            ($fullname = checkInput("fullname", 50, 1, true, $msg)) &&
+            ($email = checkInput("email",  126, 1, true, $msg)) &&
+            ($password = checkInput("password", 8, 0, true, $msg)) &&
+            ($password_repeated = checkInput("password_repeated",  8, 0, true, $msg)) &&
             ($country = checkInput("country", 2, 2, true, $msg)) &&
             ($language = checkInput("language", 25, true, $msg))
 

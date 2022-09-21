@@ -18,7 +18,7 @@ define('USER_IMAGE_FOLDER', 'users_images/');
 
 const DEFAULT_PAGE_DATA = [
     'lang' => 'fr-CA',
-    'title' => 'ClassicModels.com - Acceuil',
+    'title' => 'Ruben - Acceuil',
     'description' => 'Le plus vaste de choix de modèles réduits - Voitures - Camions - Avions - Motos et plus',
     'author' => 'Arsene',
     'icon' => 'view/icon.jpg',

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $pageData['lang']; ?></title>
+    <title><?= $pageData['title']; ?></title>
     <meta name="DESCRIPTION" content="<?= $pageData['description'] ?>">
     <meta name="author" content=" <?= $pageData['author'] ?>">
     <!-- web site icon -->

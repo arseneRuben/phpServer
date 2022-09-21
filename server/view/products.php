@@ -22,10 +22,10 @@ class products
         $pageData['content'] = "";
         $pageData['content'] .= <<<HTML
 
-        <h3>Number of products : $number </h3>
+
             <form  class="table" action="index.php"  >
             <input type="hidden" name="op" value="100"/>
-            <p> Search for id :<input  class="form-control" name="search_id" /> <button class="btn btn-primary">Go</button> <a href='index.php?op=100'>Show all</a></p>
+            <p>Number of products : $number &nbsp;  &nbsp;  &nbsp;  Search for id :<input  class="form-control" name="search_id" /> <button class="btn btn-primary">Go</button> <a href='index.php?op=100'>Show all</a></p>
            </form>
            {$tbHtml}
         HTML;
@@ -196,6 +196,7 @@ class products
         </div>
         HTML;
         webpage::render($pageData);
+        $_SESSION['notification'] = null;
     }
 
     /**
@@ -225,6 +226,7 @@ class products
                 </div>
             </div>
         HTML;
+
         webpage::render($pageData);
     }
     /**

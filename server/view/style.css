@@ -39,6 +39,11 @@ h3 {
     display: inline;
 }
 
+div.content {
+    width: 90%;
+    margin: auto;
+}
+
 footer {
     background-color: black;
     color: white;
@@ -63,7 +68,7 @@ nav a {
 }
 
 form.form {
-    width: 40%;
+    width: 80%;
     margin: auto;
     text-align: center;
     border: thick double #32a1ce;
@@ -92,8 +97,9 @@ form.form input {
 img.logo {
     color: white;
     text-decoration: inherit;
-    width: 60px;
+    width: 40px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 form.form button {
