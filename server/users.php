@@ -18,6 +18,7 @@ class users
     {
         $_SESSION['email'] = null;
         $_SESSION['picture'] = null;
+        $_SESSION['notification'] = null;
         header("location:index.php");
     }
     /**
@@ -26,6 +27,7 @@ class users
 
     public static function login($msg = "", $previousData = [])
     {
+        $_SESSION['notification'] = null;
         if ($previousData === []) {
             $previousData = [
                 'email' => '',
@@ -207,7 +209,7 @@ class users
                 $pageData['content'] = "Vous etes connecte";
                 $_SESSION["email"] = $email;
                 $_SESSION["picture"] = $users[0]["picture"];
-
+                $_SESSION['notification'] = array('Bienvenue     ' . $email => "success");
                 webpage::render($pageData);
                 return;
             }

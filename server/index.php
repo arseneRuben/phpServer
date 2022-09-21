@@ -2,7 +2,7 @@
 ini_set('session.gc_maxlifetime', 1600);
 
 // each client should remember their session id for EXACTLY 1 hour
-session_set_cookie_params(60);
+session_set_cookie_params(360);
 session_start();
 // server should keep session data for AT LEAST 1 hour
 
@@ -31,6 +31,8 @@ function main()
 
     switch ($op) {
         case 0:
+            $inFiveYears = 60 * 60 * 24 * 365 * 5 + time();
+            setcookie('lastVisit', date("G:i - d/m/y"), $inFiveYears);
             $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
             if ($lang == 'en') {
                 $pageData['content'] = "Discover and connect with trusted sellers on Whatsapp. And get the same experience as when shopping in a store.
@@ -103,37 +105,46 @@ function main()
             break;
         case 104:
             // VERIFICATION
-
-            products::creationVerify();
+            if (isset($_SESSION['email'])) {
+                products::formVerify();
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
             break;
         case 110:
             // Show product
-            /*  if (isset($_SESSION['email'])) {*/
-            $pageData['title'] = COMPANY_NAME . "-Show product ";
-            products::show($_REQUEST['id']);
-            /*  } else {
-                    crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-                }*/
+            if (isset($_SESSION['email'])) {
+                $pageData['title'] = COMPANY_NAME . "-Show product ";
+                products::show($_REQUEST['id']);
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
             break;
 
 
         case 120:
-            products::listJson();
+            if (isset($_SESSION['email'])) {
+                products::listJson();
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
             break;
-        case 130:
-            // new product
-            /*  if (isset($_SESSION['email'])) {*/
-            $pageData['title'] = COMPANY_NAME . "-New product ";
-            products::new();
-            /*  } else {
-                        crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-                    }*/
-            break;
+
         case 140:
             // Edit product
             if (isset($_SESSION['email'])) {
                 $pageData['title'] = COMPANY_NAME . "-Edit Product ";
-                products::new();
+                products::form();
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
+            break;
+
+        case 190:
+            // delete product
+            if (isset($_SESSION['email'])) {
+                $pageData['title'] = COMPANY_NAME . "-delete product ";
+                products::delete($_REQUEST['id']);
             } else {
                 crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
             }
@@ -153,7 +164,11 @@ function main()
             }
             break;
         case 420:
-            products::listJson();
+            if (isset($_SESSION['email'])) {
+                products::listJson();
+            } else {
+                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
+            }
             break;
 
         default:

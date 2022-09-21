@@ -133,7 +133,7 @@ form.table, table {
     margin: auto;
 }
 
-div.content {
+div.content, div.alert {
 
     width: 50%;
     text-align: center;

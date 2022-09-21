@@ -7,6 +7,7 @@ class products
     }
     public static function list($search_id = 0)
     {
+        $_SESSION['notification'] = null;
         $pageData = DEFAULT_PAGE_DATA;
 
         $DB = new db_pdo();
@@ -20,7 +21,7 @@ class products
         $tbHtml = tableToHtml($products, 100);
         $pageData['content'] = "";
         $pageData['content'] .= <<<HTML
-        <h2  class="error"> Product list
+
         <h3>Number of products : $number </h3>
             <form  class="table" action="index.php"  >
             <input type="hidden" name="op" value="100"/>
@@ -36,16 +37,30 @@ class products
      * print new product creation form
      */
 
-    public static function new($msg = "", $previousData = [], $classAlert = "warning")
+    public static function form($msg = "", $previousData = [], $classAlert = "warning")
     {
 
+        // Select
+        $DB = new db_pdo();
+        $DB->connect();
+        $categories = $DB->table("productcategories");
+        $selectCategories = '<SELECT name="category"   class="form-select form-control">';
         if ($previousData === []) {
-            // Update Mode
+
             if (isset($_REQUEST['id'])) {
+                // Update Mode
+                $selectCategories .= '<option value=""> Affecter une categorie </option>';
+
+
                 $id = $_REQUEST['id'];
-                $DB = new db_pdo();
-                $DB->connect();
+                $inputId = '<label>' . $id . '</label><input type="hidden" name="id"     value="' . $id . '" >';
                 $product = $DB->querySelect("Select * from products where id='$id'  ;", PDO::FETCH_OBJ);
+                foreach ($categories as $p) {
+                    if ($p->name ==  $product[0]->category)
+                        $selectCategories .= '<option value="' . $p->name . '" selected>' . $p->name . '</option>';
+                    else
+                        $selectCategories .= '<option value="' . $p->name . '" >' . $p->name . '</option>';
+                }
                 $previousData = [
                     'id' => $id,
                     'name' => $product[0]->name,
@@ -54,14 +69,17 @@ class products
                     'cost' => $product[0]->cost,
                     'retailPrice' => $product[0]->retailPrice,
                     'vendor' => $product[0]->vendor,
+                    'category' => $product[0]->category,
                     'description' => $product[0]->description
                 ];
                 //Help to check if it-is CREATION or UPDATE
                 $form_id = "product_edition";
+                $banner_tittle = "Edit product";
                 $button = <<<HTML
-                <button type="submit" class="btn btn-warning">Update product</button>
+                <button type="submit" class="btn btn-warning">Update </button>
                 HTML;
             } else {
+
                 // Creation Mode
                 $previousData = [
                     'id' => '',
@@ -69,37 +87,34 @@ class products
                     'scale' => '',
                     'stock' => '',
                     'cost' => '',
+                    'category' => '',
                     'retailPrice' => '',
                     'description' => '',
                     'vendor' => ''
                 ];
+                $inputId = '<input type="text" class="form-control" id="id"  name="id" placeholder="Identifiant" autofocus    value="' . $previousData['id'] . '"  required>';
+                $selectCategories .= '<option value="" selected> Affecter une categorie </option>';
+                foreach ($categories as $p) {
+                    $selectCategories .= '<option value="' . $p->name . '" >' . $p->name . '</option>';
+                }
+
                 //Help to check if it-is CREATION or UPDATE
                 $form_id = "product_creation";
+                $banner_tittle = "Create product";
                 $button = <<<HTML
-                <button type="submit" class="btn btn-primary">Create product</button>
+                <button type="submit" class="btn btn-primary">Create </button>
                 HTML;
             }
         }
 
         // Create or update
-
-        // Select
-        $DB = new db_pdo();
-        $DB->connect();
-        $categories = $DB->table("productcategories");
-
-        $selectCategories = '<SELECT name="category"   class="form-select form-control">';
-        $selectCategories .= '<option value="" selected> Affecter une categorie </option>';
-        foreach ($categories as $p) {
-            $selectCategories .= '<option value="' . $p->name . '" >' . $p->name . '</option>';
-        }
         $selectCategories .= '</SELECT>';
 
         $pageData = DEFAULT_PAGE_DATA;
         $pageData['title'] = COMPANY_NAME . "-New product";
         $pageData['content'] = <<<HTML
          <div class="card content">
-            <div class="alert alert-{$classAlert} d-none">Nouveau formulaire</div>
+
             <form class="needs-validation" action="index.php" method="POST" id="{$form_id}" novalidate>
 
 
@@ -109,7 +124,7 @@ class products
                 <div class="row mb-3">
                     <label for="id" class="col-sm-3 col-form-label">Identifiant</label>
                     <div class="col-sm-9">
-                    <input type="text" class="form-control" id="id"  name="id" placeholder="Identifiant" autofocus    value="{$previousData['id']}"  required>
+                        {$inputId}
                     </div>
                 </div>
 
@@ -204,7 +219,7 @@ class products
                     <p class="card-text">{$product[0]->description}</p>
                     <div>
                     <a   href="index.php?op=100" class="btn btn-primary"><i class="fa fa-list" aria-hidden="true"></i></i></a >
-                    <a   href="index.php?op=130&id={$product[0]->id}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
+                    <a   href="index.php?op=10&id={$product[0]->id}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
                     <a   href="index.php?op=190&id={$product[0]->id}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a >
                     </div>
                 </div>
@@ -212,6 +227,18 @@ class products
         HTML;
         webpage::render($pageData);
     }
+    /**
+     * print new product creation form
+     */
+
+    public static function delete($id)
+    {
+        $DB = new db_pdo();
+        $DB->connect();
+        $DB->query("DELETE  FROM products WHERE id='$id'  ;");
+        products::list();
+    }
+
 
     /**
      * Send to the client the JSON's format of the list of products
@@ -233,10 +260,10 @@ class products
      * Verify register form and submit
      */
 
-    public static function creationVerify($msg = "", $previousData = [])
+    public static function formVerify($msg = "", $previousData = [])
     {
 
-        if (!isset($_REQUEST['form_id']) || $_REQUEST['form_id'] != "product_creation") {
+        if (!isset($_REQUEST['form_id']) || (($_REQUEST['form_id'] != "product_creation") && ($_REQUEST['form_id'] != "product_edition"))) {
             crash(400, "Mauvais formulaire recu");
         }
 
@@ -247,37 +274,64 @@ class products
             ($vendor = checkInput("vendor", 140, 0, true, $msg)) &&
             ($scale = checkInput("scale", 140, 0, true, $msg))
         ) {
-
             $DB = new db_pdo();
             $DB->connect();
-            $products = $DB->querySelect("Select * from products where id='$id'  ;");
-            $products = $products->fetchAll();
-            if (count($products) > 0) {
-                $msg .= "Cet identifiant est deja pris </br>";
-            }
-            if (strlen($msg) == 0) {
-                $params = [
-                    'id' => $id,
-                    'name' => $name,
-                    'description' => $description,
-                    'retailPrice' => floatval($_REQUEST['retailPrice']),
-                    'vendor' => $vendor,
-                    'category' => $_REQUEST['category'],
-                    'scale' => $scale,
-                    'stock' => intval($_REQUEST['stock']),
-                    'cost' => floatval($_REQUEST['cost'])
-                ];
-                if ($DB->queryParams("INSERT INTO products(id, name,    category, scale, vendor, description, quantityInStock, cost, retailPrice) VALUES
-                (:id, :name, :category, :scale, :vendor, :description, :quantityInStock, :cost, :retailPrice)", $params))
-                    //  products::list("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
-                    products::show($id);
+
+
+            if ($_REQUEST['form_id'] == "product_creation") {
+
+                $products = $DB->querySelect("Select * from products where id='$id'  ;");
+
+                if (count($products) > 0) {
+                    $msg .= "Cet identifiant est deja pris </br>";
+                }
+                if (strlen($msg) == 0) {
+                    $params = [
+                        'id' => $id,
+                        'name' => $name,
+                        'description' => $description,
+                        'retailPrice' => floatval($_REQUEST['retailPrice']),
+                        'vendor' => $vendor,
+                        'category' => $_REQUEST['category'],
+                        'scale' => $scale,
+                        'quantityInStock' => intval($_REQUEST['stock']),
+                        'cost' => floatval($_REQUEST['cost'])
+                    ];
+
+                    if ($DB->queryParams("INSERT INTO products(id, name, category, scale, vendor, description, quantityInStock, cost, retailPrice) VALUES
+                    (:id, :name, :category, :scale, :vendor, :description, :quantityInStock, :cost, :retailPrice)", $params)) {
+
+                        //  products::list("Votre inscription a reussit!. Vous pouvez a present vous connecter!");
+                        $_SESSION['notification'] = array('Produit enregistre avec success     '  => "success");
+                        products::show($id);
+                    }
+                } else {
+                    products::form($previousData, "Echec de l'operation");
+                }
             } else {
+                // Cas de l'edition
+                if (strlen($msg) == 0) {
+                    $params = [
+                        'id' => $id,
+                        'name' => $name,
+                        'description' => $description,
+                        'retailPrice' => floatval($_REQUEST['retailPrice']),
+                        'vendor' => $vendor,
+                        'category' => $_REQUEST['category'],
+                        'scale' => $scale,
+                        'quantityInStock' => intval($_REQUEST['stock']),
+                        'cost' => floatval($_REQUEST['cost'])
+                    ];
+
+
+                    if ($DB->queryParams("UPDATE products SET name= :name, category=:category, scale=:scale, vendor=:vendor, description=:description, quantityInStock=:quantityInStock, cost=:cost, retailPrice=:retailPrice WHERE id=:id
+                    ", $params)) {
+
+                        $_SESSION['notification'] = array('Produit mis a jour avec success     '  => "success");
+                        products::show($id);
+                    }
+                }
             }
-        } else {
-            // users::register($msg, $_REQUEST);
         }
-
-
-        users::register($msg, $previousData);
     }
 }

@@ -18,8 +18,7 @@
                 } else {
                     echo "<span> Bienvenue, c'est votre première visite</span>";
                 }
-                $inFiveYears = 60 * 60 * 24 * 365 * 5 + time();
-                setcookie('lastVisit', date("G:i - d/m/y"), $inFiveYears);
+
                 ?>
             </p>
         </div>
