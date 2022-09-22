@@ -42,8 +42,8 @@ class users
                 <input type="hidden" name="form_id" value="login_form"/>
                 <input type="hidden" name="op" value="2"/>
                 <label>email</label> <input class = "rounded-input"  type="email" placeholder="email"  name="email" maxlength="126" value="{$previousData['email']}" required/> <br>
-                <label>password</label> <input class = "rounded-input"  placeholder="mot de passe" type="password" name="pwd"  value="{$previousData['pwd']}" maxlength="126" required/> <br>
-                <button> submit </button>
+                <label>password</label> <input class = " rounded-input"  placeholder="mot de passe" type="password" name="pwd"  value="{$previousData['pwd']}" maxlength="126" required/> <br>
+                <button class="btn btn-primary"> submit </button>
                 <input type="reset" value="annuler"/>
             </form>
         HTML;
@@ -140,33 +140,33 @@ class users
                 <input type="password" id="password" name="password" maxlength="8"  placeholder="mot de passe - max 8 car." size = "30"  value="{$previousData['password_repeated']}" class="rounded-input"><br>
 
             <input  type="password" id="password_repeated" name="password_repeated" maxlength="8"  placeholder="repetez le mot de passe" size="30"  value="{$previousData['password_repeated']}" class="rounded-input"><br>
-        </fieldset>
-        <fieldset class="line-form">
-                    <div>
-                        {$selectPays}
-                    </div>
-                    <br/>
-                    <div>
-                     <label for="info">Je desire recevoir les informations sur les produits
-                     </label>
-                        <input type="checkbox" name="spam_ok"  checked="checked" id="info"  class="rounded-input" />
-                    </div>
-                    <br/>
-                 <div>
-                    {$radioLanguage}
+                </fieldset>
+                <fieldset class="line-form">
+                            <div>
+                                {$selectPays}
+                            </div>
+                            <br/>
+                            <div>
+                            <label for="info">Je desire recevoir les informations sur les produits
+                            </label>
+                                <input type="checkbox" name="spam_ok"  checked="checked" id="info"  class="rounded-input" />
+                            </div>
+                            <br/>
+                        <div>
+                            {$radioLanguage}
+                        </div>
+                </fieldset>
+                <fieldset class="line-form">
+                <div>
+                <label for="avatar">Image de profil
+                            </label>
+                        <input id="avatar"  type="file"  name="avatar"  placeholder="Ma photo de profil"  class="rounded-input"><br>
                 </div>
-         </fieldset>
-         <fieldset class="line-form">
-         <div>
-         <label for="avatar">Image de profil
-                     </label>
-                 <input id="avatar"  type="file"  name="avatar"  placeholder="Ma photo de profil"  class="rounded-input"><br>
-         </div>
-         </fieldset>
+                </fieldset>
 
-        <fieldset class="line-form">
-             <input button type="submit" value="Soumettre"  class="rounded-input"/><input type="reset"  class="rounded-input" value="Annuler"/>
-        </fieldset>
+                <fieldset class="line-form">
+                    <input button type="submit" value="Submit"  class="btn btn-primary rounded-input"/><input type="reset"  class=" btn btn-secondary rounded-input " value="Cancel"/>
+                </fieldset>
 
         </form>
     HTML;
@@ -208,7 +208,8 @@ class users
                 $pageData['title'] = "Welcome!";
                 $pageData['content'] = "Vous etes connecte";
                 $_SESSION["email"] = $email;
-                $_SESSION["picture"] = $users[0]["picture"];
+                $_SESSION["picture"] = $users[0]["picture"] ?: 'anonymous.jpg';
+                var_dump($_SESSION["picture"]);
                 $_SESSION['notification'] = array('Bienvenue     ' . $email => "success");
                 webpage::render($pageData);
                 return;

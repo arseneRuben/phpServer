@@ -1,5 +1,5 @@
 <footer>
-    <div> Exercice par &nbsp;<?= $pageData['author'] ?> &copy;</div>
+    <div> Designed by &nbsp;<?= $pageData['author'] ?> &copy;</div>
     <div><?php echo COMPANY_STREET_ADDRESS . ' ' . COMPANY_PROVINCE . ' ' . COMPANY_COUNTRY . ' ' . COMPANY_POSTAL_CODE . '</div><div>' . COMPANY_PHONE_NUMBER . '  <a href="mailto:name@rapidtables.com">' . COMPANY_EMAIL . '</a>
 
  </div>' ?><div>
@@ -14,9 +14,9 @@
                 // last visit
                 if (isset($_COOKIE['lastVisit'])) {
                     $visite = $_COOKIE['lastVisit'];
-                    echo "<span>Dernière visite: " . $visite . "</span>";
+                    echo "<span>Last visit: " . $visite . "</span>";
                 } else {
-                    echo "<span> Bienvenue, c'est votre première visite</span>";
+                    echo "<span> Welcome! This is your first visit.</span>";
                 }
 
                 ?>

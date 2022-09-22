@@ -208,6 +208,11 @@ class products
         $DB = new db_pdo();
         $DB->connect();
         $product = $DB->querySelect("Select * from products where id='$id'  ;", PDO::FETCH_OBJ);
+        $params = ['id' => $id];
+        $commandLines = $DB->querySelectParams('SELECT  orders.date as "Date", orderdetails.quantity as "Qte", orderdetails.priceEach  as "Price", orderdetails.quantity*orderdetails.priceEach as "Price*Qte" FROM orders INNER JOIN orderdetails ON  orders.id = orderdetails.orderId
+        INNER JOIN products ON orderdetails.productId = products.id WHERE products.id=:id ORDER BY orders.date DESC LIMIT 3;',  $params);
+        $commandLines = tableToHtml($commandLines);
+
         $pageData = DEFAULT_PAGE_DATA;
         $pageData['title'] = COMPANY_NAME . "-Show product";
         $pageData['content'] = <<<HTML
@@ -219,8 +224,20 @@ class products
                     <h5 class="card-title">Stock:{$product[0]->quantityInStock}</h5>
                     <p class="card-text">{$product[0]->description}</p>
                     <div>
+                    <p class="card-text"><span>Category:</span>{$product[0]->category}</p>
+                    <p class="card-text"><span>Unit price:</span>{$product[0]->cost} CAD</p>
+                    <p class="card-text"><span>Retail price:</span>{$product[0]->retailPrice} CAD</p>
+                    <p class="card-text"><span>Quantity in stock:</span>{$product[0]->quantityInStock}</p>
+                    <p class="card-text"><span>Vendor:</span>{$product[0]->vendor}</p>
+                    </div>
+                    <div>
+                       <p> <strong> Liste des dernieres factures</strong>
+                        </p>
+                        {$commandLines}
+                    <div>
+                    <div>
                     <a   href="index.php?op=100" class="btn btn-primary"><i class="fa fa-list" aria-hidden="true"></i></i></a >
-                    <a   href="index.php?op=10&id={$product[0]->id}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
+                    <a   href="index.php?op=140&id={$product[0]->id}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a >
                     <a   href="index.php?op=190&id={$product[0]->id}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a >
                     </div>
                 </div>

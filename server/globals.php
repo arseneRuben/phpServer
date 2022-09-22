@@ -18,8 +18,8 @@ define('USER_IMAGE_FOLDER', 'users_images/');
 
 const DEFAULT_PAGE_DATA = [
     'lang' => 'fr-CA',
-    'title' => 'Ruben - Acceuil',
-    'description' => 'Le plus vaste de choix de modèles réduits - Voitures - Camions - Avions - Motos et plus',
+    'title' => 'Ruben - Welcome',
+    'description' => 'Largest choice of model cars - Cars - Trucks - Airplanes - Motorcycles and more',
     'author' => 'Arsene',
     'icon' => 'view/icon.jpg',
     'manual' => 'manual.pdf',
