@@ -12,8 +12,6 @@ define("INDEX_LOADED", true); // Indique que l'entree du system a ete correcteme
 require_once "globals.php";
 require_once "tools.php";
 require_once "view/webpage.php";
-require_once "users.php";
-require_once "view/customers.php";
 require_once "view/products.php";
 function main()
 {
@@ -49,33 +47,7 @@ function main()
             webpage::render($pageData);
 
             break;
-        case 1:
-            // LOGIN PAGE
-            // $pageData['content'] = "<h1>Sign In</h1>";
-            $pageData['title'] = COMPANY_NAME . "-Login page";
-            // Affiche la page
-            users::login();
-            break;
-        case 2:
-            // VERIFICATION
-            $pageData['title'] = COMPANY_NAME . "-Welcome page";
-            users::loginVerifiy();
-            break;
-        case 3:
-            // SIGN UP
 
-            users::register("", $_REQUEST);
-            break;
-        case 4:
-            // VERIFICATION
-
-            users::registerVerify();
-            break;
-        case 5:
-            // VERIFICATION
-
-            users::logout();
-            break;
         case 10:
             // ABOUT
             $pageData['content'] = "Buyam is a local e-commerce platform whose sole objective is to provide buyers with the same experience and feeling that they often experience in direct sales (face to face) in a market or in a store by allowing them to chat with the seller, allowing them to negotiate the price of the product and reach a mutual agreement. This functionality that allows buyers to negotiate the price of items as they normally do in a marketplace is what sets Buyam apart from all other e-commerce apps out there.";
@@ -143,19 +115,7 @@ function main()
             }
             break;
 
-        case 400:
-            if (isset($_SESSION['email'])) {
-                $pageData['title'] = COMPANY_NAME . "-Customer list";
 
-
-                if (isset($_REQUEST['search_id']))
-                    customers::list(intval($_REQUEST['search_id']));
-                else
-                    customers::list();
-            } else {
-                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-            }
-            break;
         case 420:
             if (isset($_SESSION['email'])) {
                 $pageData['title'] = COMPANY_NAME . "-Product list(json) ";

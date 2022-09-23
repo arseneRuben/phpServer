@@ -27,22 +27,21 @@
 
 
 header>h2 {
-    background-color: blanchedalmond;
+    background-color: black;
     color: white;
     padding: 10px;
     text-align: center;
-    height: 40px;
+    height: 30px;
+    font-size: medium;
     vertical-align: middle;
+    padding-bottom: 4%;
 }
 
 h3 {
     display: inline;
 }
 
-div.content {
-    width: 90%;
-    margin: auto;
-}
+
 
 footer {
     background-color: black;
@@ -52,10 +51,13 @@ footer {
 
 nav {
     text-align: center;
+    background-color: gray;
+    padding: 10px;
+    font: 16px/18px sans-serif;
 }
 
 nav a {
-    color: aliceblue;
+    color: black;
     text-decoration: none;
     padding: 0 0.5rem;
 
@@ -148,4 +150,46 @@ div.content, div.alert {
     width: 50%;
     text-align: center;
     margin: auto;
+}
+
+
+/* PRODUCT CATALOGUE  STYLING*/
+
+/* product div */
+.product {
+    width: 200px;
+    height: 350px;
+    overflow: auto;
+    border: 1px solid black;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+}
+
+.product:hover {
+    background-color: #c0c0c0;
+}
+
+/* product image */
+.product img {
+    width: 100%;
+}
+
+/* product name */
+.product .name {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* product description */
+.product .description {
+    margin: 0;
+}
+
+/* product price */
+.product .price {
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    margin: 0;
 }

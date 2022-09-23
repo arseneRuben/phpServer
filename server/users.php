@@ -209,7 +209,7 @@ class users
                 $pageData['content'] = "Vous etes connecte";
                 $_SESSION["email"] = $email;
                 $_SESSION["picture"] = $users[0]["picture"] ?: 'anonymous.jpg';
-                var_dump($_SESSION["picture"]);
+
                 $_SESSION['notification'] = array('Bienvenue     ' . $email => "success");
                 webpage::render($pageData);
                 return;
@@ -294,6 +294,7 @@ class users
                 //Upload de l'avatar
                 Picture_Uploaded_Save_File("avatar", "users_images/");
                 if ($msg != "ok") {
+                    die();
                 }
 
                 if ($DB->queryParams("INSERT INTO users(email, fullname,    pw, country, language, spam_ok, picture) VALUES

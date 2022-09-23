@@ -28,7 +28,7 @@
                 echo '<a href="index.php?op=100">Produits</a> &#124; <a   href="index.php?op=140" class="btn btn-light"><i class="fa fa-plus-circle" aria-hidden="true"></i></a ></h2>';
             } else {
                 echo ' <a href="index.php?op=1"><i class="fa fa-sign-in" aria-hidden="true"></i></a>  &#124;
-            <a href="index.php?op=3"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+
        ';
             }
             ?>
