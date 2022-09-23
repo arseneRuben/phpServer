@@ -51,57 +51,9 @@ function main()
             // Product list
             products::list();
             break;
-        case 10:
-            // ABOUT
-            $pageData['content'] = "Buyam is a local e-commerce platform whose sole objective is to provide buyers with the same experience and feeling that they often experience in direct sales (face to face) in a market or in a store by allowing them to chat with the seller, allowing them to negotiate the price of the product and reach a mutual agreement. This functionality that allows buyers to negotiate the price of items as they normally do in a marketplace is what sets Buyam apart from all other e-commerce apps out there.";
-
-            $pageData['title'] = COMPANY_NAME . "-About";
-            // Affiche la page
-            webpage::render($pageData);
-
-            break;
-
-
-
-        case 110:
-
-            // Show product
-            if (isset($_SESSION['email'])) {
-                $pageData['title'] = COMPANY_NAME . "-Show presentation ";
-                products::show($_REQUEST['id']);
-            } else {
-                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-            }
-            break;
-
-        case 140:
-            // Edit product
-            if (isset($_SESSION['email'])) {
-                //$pageData['title'] = COMPANY_NAME . "-Edit Product ";
-                products::form();
-            } else {
-                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-            }
-            break;
-
-        case 190:
-            // delete product
-            if (isset($_SESSION['email'])) {
-                $pageData['title'] = COMPANY_NAME . "-Delete product ";
-                products::delete($_REQUEST['id']);
-            } else {
-                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-            }
-            break;
-
-
-        case 420:
-            if (isset($_SESSION['email'])) {
-                $pageData['title'] = COMPANY_NAME . "-Product list(json) ";
-                products::listJson();
-            } else {
-                crash(401, "Vous devez etre connectes a <a href='index.php?op=1'>page de connexion </a> ");
-            }
+        case 2:
+            // Product list
+            products::catalogue();
             break;
 
         default:

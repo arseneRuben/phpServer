@@ -11,7 +11,7 @@ define('COMPANY_PHONE_NUMBER', '+514-123-4567');
 define('LOG_FILE', 'homeviews.txt');
 define('MAX_LOGIN_ATEMPT', 3);
 define('VISITOR_LOG_FILE', 'visitors.log');
-define('USER_IMAGE_FOLDER', 'users_images/');
+define('IMAGE_FOLDER', 'products_images/');
 
 
 
@@ -22,7 +22,7 @@ const DEFAULT_PAGE_DATA = [
     'description' => 'Largest choice of model cars - Cars - Trucks - Airplanes - Motorcycles and more',
     'author' => 'Stephane Lapointe',
     'icon' => 'view/icon.jpg',
-    'manual' => 'manual.pdf',
-    'content' => 'ERREUR-CONTENU-NON-SPECIFIE',
+
+    'content' => '',
     'compteVues' => null
 ];
