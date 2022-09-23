@@ -7,6 +7,6 @@
     ?>
 
  <nav>
-     <a href="index.php?op=100">Product List</a> &#124; <a href="index.php?op=140" class="btn btn-light">Product Catalogue</a>
+     <a href="index.php?op=1">Product List</a> &#124; <a href="index.php?op=2" class="btn btn-light">Product Catalogue</a>
      &#124;
  </nav>

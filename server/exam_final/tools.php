@@ -84,11 +84,11 @@ function  tableToHtml($table)
     if ($table === []) {
         $html = "tableau vide";
     } else {
-        $html = '<table  class="table"><thead>';
+        $html = '<table  class="table table-bordered"><thead>';
         foreach (array_keys($table[0]) as $key) {
             $html .= '<th scope="col">' . $key . '</th>';
         }
-        $html .= '<th scope="col">Actions</th>';
+
         $html .=  "</thead><tbody>";
         foreach ($table as $produit) {
             $html .= "<tr>";
@@ -96,12 +96,6 @@ function  tableToHtml($table)
             foreach (array_keys($table[0]) as $key) {
                 $html .= "<td>" . $produit[$key] . "</td>";
             }
-            $html .= '<td>
-                            <a   href="index.php?op=110&id=' . ($produit['id']) . '" class="btn btn-info"><i class="fa fa-eye fa-3x" aria-hidden="true"></i></a >
-                            <a   href="index.php?op=140&id=' . ($produit['id']) .  '" class="btn btn-warning"><i class="fa fa-pencil fa-3x" aria-hidden="true"></i></a >
-                            <a   href="index.php?op=190&id=' . ($produit['id']) .  '" class="btn btn-danger"><i class="fa fa-trash fa-3x" aria-hidden="true"></i></a >
-                     </td>';
-            $html .= "</tr>";
         }
 
         $html .=  "</tbody></table>";

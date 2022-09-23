@@ -2,22 +2,15 @@
 class db_pdo
 {
     //Local development
-    // const DB_SERVER_TYPE = 'mysql'; // MySQL or MariaDB server
-    // const DB_HOST = '127.0.0.1'; // local server on my laptop
-    // const DB_PORT = 3307; // optional, default 3306, use 3307 for MariaDB
-    // const DB_NAME = 'classicmodels'; // for Database classicmodels
-    // const DB_CHARSET = 'utf8mb4'; // pour français correct
-    // const DB_USER_NAME = 'root'; // if not root it must have been previously created on DB server
-    // const DB_PASSWORD = '';
-
-    //production development
     const DB_SERVER_TYPE = 'mysql'; // MySQL or MariaDB server
-    const DB_HOST = 'sql203.epizy.com'; // local server on my laptop
-    const DB_PORT = 3306; // optional, default 3306, use 3307 for MariaDB
-    const DB_NAME = 'epiz_32639877_classicmodels'; // for Database classicmodels
+    const DB_HOST = '127.0.0.1'; // local server on my laptop
+    const DB_PORT = 3307; // optional, default 3306, use 3307 for MariaDB
+    const DB_NAME = 'manchester_united'; // for Database classicmodels
     const DB_CHARSET = 'utf8mb4'; // pour français correct
-    const DB_USER_NAME = 'epiz_32639877'; // if not root it must have been previously created on DB server
-    const DB_PASSWORD = 'iKpA5RFmYouA';
+    const DB_USER_NAME = 'root'; // if not root it must have been previously created on DB server
+    const DB_PASSWORD = '';
+
+
 
     // PDO connection options
     const DB_OPTIONS = [
